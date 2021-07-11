@@ -10,7 +10,8 @@ export var ACCELERATION = 500
 export var AIR_ACCELERATION = 200
 export var MAX_SPEED = 70
 export var WALL_SLIDE_SPEED = 30
-export var ACCELERATED_WALL_SLIDE_SPEED = 50
+export var ACCELERATED_WALL_SLIDE_SPEED = 60
+export var WALL_BOOST_SPEED = 140
 
 # Vectors
 var velocity = Vector2.ZERO
@@ -19,11 +20,15 @@ var snap_vector = Vector2.ZERO
 # Platforming Booleans
 var just_jumped = false
 var is_jumping = false
+var just_boosted = false
 
 # Timers
 onready var coyoteTimer = $CoyoteTimer
 onready var landingJumpTimer = $LandingJumpTimer
 onready var wallClingTimer = $WallClingTimer
+
+# Other Variables Created Onready
+onready var max_speed_backup = MAX_SPEED
 
 # States
 enum {
@@ -70,15 +75,19 @@ func apply_friction(input_vector):
 		velocity.x = lerp(velocity.x, 0, AIR_RESISTANCE)
 
 func apply_horizontal_force(input_vector, delta):
-	if input_vector.x == 0: return
-	
-	if is_on_floor():
-		velocity.x += ACCELERATION * input_vector.x * delta
-	else:
-		velocity.x += AIR_ACCELERATION * input_vector.x * delta
+	if just_boosted:
+		MAX_SPEED = move_toward(MAX_SPEED, max_speed_backup, ACCELERATION * delta)
+		
+		if MAX_SPEED == max_speed_backup:
+			just_boosted = false
+		
+	if input_vector.x != 0:
+		if is_on_floor():
+			velocity.x += ACCELERATION * input_vector.x * delta
+		else:
+			velocity.x += AIR_ACCELERATION * input_vector.x * delta
 		
 	velocity.x = clamp(velocity.x, -MAX_SPEED, MAX_SPEED)
-		
 
 func get_input_vector():
 	var input_vector = Vector2.ZERO
@@ -138,7 +147,15 @@ func wall_cling_check(wall_axis):
 	if is_on_floor():
 		state = MOVE_STATE
 		return
+	
+	if Input.is_action_just_pressed("jump"):
+		boost_of_wall(wall_axis)
+		state = MOVE_STATE
 		
+	if Input.is_action_pressed("slide_faster"):
+		slide_down_wall()
+		return
+	
 	match wall_axis:
 		1:
 			if Input.is_action_pressed("walk_right") and not wallClingTimer.is_stopped():
@@ -165,7 +182,17 @@ func slide_down_wall():
 	else:
 		velocity.y = WALL_SLIDE_SPEED
 
+func boost_of_wall(wall_axis):
+	just_boosted = true
+	MAX_SPEED = WALL_BOOST_SPEED
+	velocity.x = MAX_SPEED * -wall_axis
+	jump(JUMP_FORCE/3)
+
 func wall_detach_check(wall_axis, delta):
+	if Input.is_action_just_pressed("jump"):
+		boost_of_wall(wall_axis)
+		state = MOVE_STATE
+		
 	match wall_axis:
 		1:
 			if Input.is_action_pressed("walk_left"):
