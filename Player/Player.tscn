@@ -3,9 +3,10 @@
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4, 10 )
+extents = Vector2( 4, 16 )
 
 [node name="Player" type="KinematicBody2D"]
+collision_layer = 2
 script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -22,3 +23,13 @@ one_shot = true
 [node name="WallClingTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="WallDetectorTop" type="RayCast2D" parent="."]
+position = Vector2( -5, -15 )
+enabled = true
+cast_to = Vector2( 10, 0 )
+
+[node name="WallDetectorBottom" type="RayCast2D" parent="."]
+position = Vector2( -5, 15 )
+enabled = true
+cast_to = Vector2( 10, 0 )

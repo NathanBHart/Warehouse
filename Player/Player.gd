@@ -22,10 +22,17 @@ var just_jumped = false
 var is_jumping = false
 var just_boosted = false
 
+# Preload Resources
+var MainInstances = ResourceLoader.MainInstances
+
 # Timers
 onready var coyoteTimer = $CoyoteTimer
 onready var landingJumpTimer = $LandingJumpTimer
 onready var wallClingTimer = $WallClingTimer
+
+# Collisions
+onready var wallDetectorTop = $WallDetectorTop
+onready var wallDetectorBottom = $WallDetectorBottom
 
 # Other Variables Created Onready
 onready var max_speed_backup = MAX_SPEED
@@ -37,6 +44,16 @@ enum {
 }
 
 var state = MOVE_STATE
+
+# Signals
+# warning-ignore:unused_signal
+signal hit_door(door)
+
+func _ready():
+	MainInstances.Player = self
+
+func _exit_tree():
+	MainInstances.Player = null
 
 func _physics_process(delta):
 	match state:
@@ -193,6 +210,9 @@ func wall_detach_check(wall_axis, delta):
 		boost_of_wall(wall_axis)
 		state = MOVE_STATE
 		
+	if not wall_detected():
+		state = MOVE_STATE
+		
 	match wall_axis:
 		1:
 			if Input.is_action_pressed("walk_left"):
@@ -202,6 +222,9 @@ func wall_detach_check(wall_axis, delta):
 			if Input.is_action_pressed("walk_right"):
 				velocity.x = ACCELERATION * delta
 				state = MOVE_STATE
+
+func wall_detected():
+	return wallDetectorBottom.is_colliding() or wallDetectorTop.is_colliding()
 
 func move():
 	var was_on_floor = is_on_floor()

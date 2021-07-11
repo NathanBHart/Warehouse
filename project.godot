@@ -8,11 +8,25 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Resource",
+"class": "MainInstances",
+"language": "GDScript",
+"path": "res://Singletons/ResourcesToLoad/MainInstances.gd"
+} ]
+_global_script_class_icons={
+"MainInstances": ""
+}
+
 [application]
 
 config/name="Lost Tech Game Demo"
-run/main_scene="res://Rooms/Room1.tscn"
+run/main_scene="res://World/Main.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+ResourceLoader="*res://Singletons/ResourceLoader.gd"
 
 [display]
 
@@ -68,6 +82,10 @@ slide_faster={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"unicode":0,"echo":false,"script":null)
  ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="Player"
 
 [physics]
 
