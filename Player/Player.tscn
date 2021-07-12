@@ -3,7 +3,7 @@
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4, 16 )
+extents = Vector2( 4, 14 )
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
@@ -25,11 +25,11 @@ wait_time = 2.0
 one_shot = true
 
 [node name="WallDetectorTop" type="RayCast2D" parent="."]
-position = Vector2( -5, -15 )
+position = Vector2( -5, -13 )
 enabled = true
 cast_to = Vector2( 10, 0 )
 
 [node name="WallDetectorBottom" type="RayCast2D" parent="."]
-position = Vector2( -5, 15 )
+position = Vector2( -5, 13 )
 enabled = true
 cast_to = Vector2( 10, 0 )
