@@ -8,10 +8,19 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Resource",
+"class": "MainInstances",
+"language": "GDScript",
+"path": "res://Singletons/ResourcesToLoad/MainInstances.gd"
+} ]
+_global_script_class_icons={
+"MainInstances": ""
+}
+
 [application]
 
 config/name="Lost Tech Game Demo"
-run/main_scene="res://Rooms/Room1.tscn"
 config/icon="res://icon.png"
 
 [display]
