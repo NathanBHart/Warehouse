@@ -3,9 +3,11 @@ extends Node
 var MainInstances = ResourceLoader.MainInstances
 
 onready var currentRoom = $Room1
+onready var canvasModulate = $CanvasModulate
 
 func _ready():
 	MainInstances.Player.connect("hit_door", self, "_on_Player_hit_door")
+	MainInstances.Main = self
 
 func change_rooms(door):
 	var offset = currentRoom.position

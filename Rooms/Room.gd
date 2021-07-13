@@ -1,5 +1,7 @@
 extends Node2D
 
+export (Color) var BASE_COLOR = Color.white
+
 const MAIN = preload("res://World/Main.gd")
 
 onready var topLeft = $Limits/TopLeft
@@ -12,6 +14,9 @@ func _ready():
 	var parent = get_parent()
 	if parent is MAIN:
 		parent.currentRoom = self
+		
+	call_deferred("set_modulate", BASE_COLOR)
+	
 
 func set_camera_limits():
 	var MainCamera = MainInstances.MainCamera
@@ -20,3 +25,6 @@ func set_camera_limits():
 		MainCamera.limit_left = topLeft.global_position.x
 		MainCamera.limit_bottom = bottomRight.global_position.y
 		MainCamera.limit_right = bottomRight.global_position.x
+
+func set_modulate(color):
+	MainInstances.Main.canvasModulate.color = color
