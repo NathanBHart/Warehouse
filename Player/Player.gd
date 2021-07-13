@@ -63,7 +63,10 @@ func _ready():
 
 func _physics_process(delta):
 	
+	holding = flashlight.flashlight_on
+	
 	match state:
+		
 		MOVE_STATE:
 			var input_vector = get_input_vector()
 			reset_wall_cling_timer()
@@ -75,6 +78,7 @@ func _physics_process(delta):
 			move()
 			wall_check()
 			update_animations(input_vector)
+			
 		WALL_STATE:
 			
 			var input_vector = get_input_vector()

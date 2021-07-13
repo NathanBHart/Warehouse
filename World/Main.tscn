@@ -18,3 +18,5 @@ position = Vector2( 68.6123, 82.097 )
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../Camera")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
