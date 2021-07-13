@@ -23,7 +23,7 @@ func _physics_process(delta):
 			
 			gravity_scale = distance_scale_factor
 			
-			if (not Input.is_action_pressed("main_action") or not MainInstances.Player.idle):
+			if (not Input.is_action_pressed("use") or not MainInstances.Player.idle):
 				state = DO_NOT_MOVE
 				
 			var mouse_position = get_global_mouse_position()
@@ -35,7 +35,7 @@ func _physics_process(delta):
 			
 			gravity_scale = 1
 			
-			if (mouse_detected and Input.is_action_pressed("main_action") and MainInstances.Player.idle):
+			if (mouse_detected and Input.is_action_pressed("use") and MainInstances.Player.idle):
 				state = MOVE
 
 func _on_MouseDetectorLarge_mouse_entered():

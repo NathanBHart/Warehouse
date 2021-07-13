@@ -3,7 +3,6 @@
 [ext_resource path="res://Rooms/Room.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World/Door.tscn" type="PackedScene" id=2]
 [ext_resource path="res://DoorConnections/1-2.tres" type="Resource" id=3]
-[ext_resource path="res://World/RigidBodies/RigidBody2D.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Player/Flashlight-Beam.png" type="Texture" id=4]
 
 [node name="Room1" instance=ExtResource( 1 )]
@@ -23,8 +22,6 @@ NEW_LEVEL_PATH = "res://Rooms/Room2.tscn"
 [node name="BottomRight" parent="Limits" index="1"]
 position = Vector2( 320, 184 )
 
-[node name="RigidBody2D" parent="." index="4" instance=ExtResource( 4 )]
-position = Vector2( 192, 56 )
 [node name="Light2D" type="Light2D" parent="." index="4"]
 position = Vector2( 378.116, 109.914 )
 scale = Vector2( -1, 0.974372 )
