@@ -41,8 +41,12 @@ onready var sprite = $Sprite
 onready var animationPlayer = $AnimationPlayer
 onready var turnTimer = $AnimationTimers/TurnTimer
 onready var jumpTimer = $AnimationTimers/JumpTimer
+onready var flashlight = $Sprite/Flashlight
 
-# Preload Resources
+var turning = false
+var turn_to = 1
+var holding = true
+
 var MainInstances = ResourceLoader.MainInstances
 
 # Other Variables Created Onready
@@ -65,24 +69,29 @@ func _ready():
 
 func _physics_process(delta):
 	
+	holding = flashlight.flashlight_on
+	
 	match state:
+		
 		MOVE_STATE:
-			if jumpTimer.is_stopped():
-				var input_vector = get_input_vector()
-				reset_wall_cling_timer()
-				apply_horizontal_force(input_vector, delta)
-				apply_friction(input_vector)
-				update_snap_vector()
-				jump_check()
-				apply_gravity(delta)
-				move()
-				wall_check()
-				update_animations(input_vector)
+			var input_vector = get_input_vector()
+			reset_wall_cling_timer()
+			apply_horizontal_force(input_vector, delta)
+			apply_friction(input_vector)
+			update_snap_vector()
+			jump_check()
+			apply_gravity(delta)
+			move()
+			wall_check()
+			update_animations(input_vector)
+			
 		WALL_STATE:
 			if animationPlayer.is_playing():
 				animationPlayer.stop()
-				
-			sprite.frame = 19
+			if holding:
+				sprite.frame = 39
+			else:
+				sprite.frame = 19
 			
 			var wall_axis = get_wall_axis()
 			
@@ -274,7 +283,15 @@ func move():
 		position.x = last_position.x
 
 func update_animations(input_vector):
-	if animationPlayer.is_playing() and animationPlayer.current_animation == "jump":
+	
+	if holding:
+		flashlight.show()
+	else:
+		flashlight.hide()
+		
+	var current_anim = animationPlayer.current_animation
+	
+	if animationPlayer.is_playing() and (current_anim == "jump" or current_anim == "jump-holding"):
 		return
 	
 	if input_vector.x != 0:
@@ -286,15 +303,24 @@ func update_animations(input_vector):
 			turnTimer.stop()
 			is_turning = false
 			
-		if not is_turning:
-			animationPlayer.play("run")
+		if not turning:
+			if holding:
+				animationPlayer.play("run-holding")
+			else:
+				animationPlayer.play("run")
 		else:
 			if animationPlayer.is_playing():
 				animationPlayer.stop()
-			sprite.frame = 12
+			if holding:
+				sprite.frame = 32
+			else:
+				sprite.frame = 12
 
 	else:
-		animationPlayer.play("idle")
+		if holding:
+				animationPlayer.play("idle-holding")
+		else:
+			animationPlayer.play("idle")
 	
 	if not is_on_floor():
 		
@@ -302,13 +328,25 @@ func update_animations(input_vector):
 			animationPlayer.stop()
 		
 		if velocity.y > 0:
-			sprite.frame = 17
+			if holding:
+				sprite.frame = 37
+			else:
+				sprite.frame = 17
 		else:
-			sprite.frame = 18
+			if holding:
+				sprite.frame = 38
+			else:
+				sprite.frame = 18
 
-func animate_jump():
-	if not animationPlayer.is_playing() or animationPlayer.current_animation != "jump":
-		animationPlayer.play("jump")
+func jump_animating():
+	
+	var current_anim = animationPlayer.current_animation
+	
+	if not animationPlayer.is_playing() or not (current_anim == "jump" or current_anim == "jump-holding"):
+		if holding:
+			animationPlayer.play("jump-holding")
+		else:
+			animationPlayer.play("jump")
 		jumpTimer.start()
 
 func _on_TurnTimer_timeout():
