@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Graphics/Player/Player.png" type="Texture" id=2]
 [ext_resource path="res://Player/Player-Arm-Flashlight.png" type="Texture" id=3]
 [ext_resource path="res://Player/Flashlight.gd" type="Script" id=4]
 [ext_resource path="res://Player/Flashlight-Beam.png" type="Texture" id=5]
+[ext_resource path="res://EnemyComponents/Hurtbox.tscn" type="PackedScene" id=6]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.51984
@@ -153,6 +154,9 @@ tracks/1/keys = {
 "values": [ Vector2( 2, -2 ), Vector2( 2, -1 ), Vector2( 2, -2 ), Vector2( 2, -1 ), Vector2( 2, -2 ) ]
 }
 
+[sub_resource type="CapsuleShape2D" id=9]
+radius = 5.0
+
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 2
 script = ExtResource( 1 )
@@ -220,5 +224,16 @@ anims/jump-holding = SubResource( 6 )
 anims/run = SubResource( 7 )
 anims/run-holding = SubResource( 8 )
 
+[node name="Hurtbox" parent="." instance=ExtResource( 6 )]
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2( 0, -13 )
+shape = SubResource( 9 )
+
 [connection signal="timeout" from="AnimationTimers/TurnTimer" to="." method="_on_TurnTimer_timeout"]
 [connection signal="timeout" from="AnimationTimers/JumpTimer" to="." method="_on_JumpTimer_timeout"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+
+[editable path="Hurtbox"]
