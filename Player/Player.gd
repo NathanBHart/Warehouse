@@ -26,6 +26,7 @@ var snap_vector = Vector2.ZERO
 var just_jumped = false
 var is_jumping = false
 var just_boosted = false
+var idle = false
 
 # Animation Variables
 var is_turning = false
@@ -53,7 +54,6 @@ onready var max_speed_backup = MAX_SPEED
 enum {
 	MOVE_STATE,
 	WALL_STATE,
-	IDLE_STATE
 }
 
 var state = MOVE_STATE
@@ -70,11 +70,11 @@ func queue_free():
 	.queue_free()
 
 func _physics_process(delta):
+	
 	match state:
 		MOVE_STATE:
 			if jumpTimer.is_stopped():
 				var input_vector = get_input_vector()
-				idle_state_check()
 				reset_wall_cling_timer()
 				apply_horizontal_force(input_vector, delta)
 				apply_friction(input_vector)
@@ -95,21 +95,9 @@ func _physics_process(delta):
 				sprite.scale.x = 1
 			else:
 				sprite.scale.x = -wall_axis
-			
-			idle_state_check()
 			wall_cling_check(wall_axis)
 			move()
 			wall_detach_check(wall_axis, delta)
-		IDLE_STATE:
-			if Input.is_action_just_pressed("ui_focus_next"):
-				state = MOVE_STATE
-			if is_on_floor():
-				animationPlayer.play("idle")
-			else:
-				sprite.frame = 19
-			apply_gravity(delta)
-			apply_friction(Vector2.ZERO)
-			move()
 			
 	if Input.is_key_pressed(KEY_ESCAPE):
 		get_tree().quit()
@@ -122,10 +110,13 @@ func apply_gravity(delta):
 		is_jumping = false
 
 func apply_friction(input_vector):
-	if input_vector.x != 0: return
+	if input_vector.x != 0: 
+		idle = false
+		return
 	
 	if is_on_floor():
 		velocity.x = lerp(velocity.x, 0, FRICTION)
+		idle = true
 	else:
 		velocity.x = lerp(velocity.x, 0, AIR_RESISTANCE)
 
@@ -265,10 +256,6 @@ func wall_detach_check(wall_axis, delta):
 				velocity.x = ACCELERATION * delta
 				state = MOVE_STATE
 				clingArea.monitoring = false
-
-func idle_state_check():
-	if Input.is_action_just_pressed("ui_focus_next"):
-		state = IDLE_STATE
 
 func move():
 	var was_on_floor = is_on_floor()
