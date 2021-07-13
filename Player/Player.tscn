@@ -173,22 +173,7 @@ shape = SubResource( 2 )
 position = Vector2( 0, -14.4975 )
 texture = ExtResource( 2 )
 hframes = 40
-frame = 22
-
-[node name="Flashlight" type="Sprite" parent="Sprite"]
-position = Vector2( 2, -2 )
-z_index = -1
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-flashlight_on = true
-
-[node name="Light2D" type="Light2D" parent="Sprite/Flashlight"]
-position = Vector2( 8.07168, -2.53501 )
-texture = ExtResource( 5 )
-offset = Vector2( 50, 0 )
-shadow_enabled = true
-shadow_filter = 5
-shadow_filter_smooth = 7.0
+frame = 16
 
 [node name="CoyoteTimer" type="Timer" parent="."]
 wait_time = 0.15

@@ -1,5 +1,8 @@
 extends KinematicBody2D
 
+# Warning Ignores
+# warning-ignore:unused_signal
+
 # Export Constants
 export var MAX_SLOPE_ANGLE = 46
 export var JUMP_FORCE = 180
@@ -22,6 +25,10 @@ var snap_vector = Vector2.ZERO
 var just_jumped = false
 var is_jumping = false
 var just_boosted = false
+
+# Animation Variables
+var is_turning = false
+var turn_to = 1
 
 # Platforming Controllers
 onready var coyoteTimer = $CoyoteTimer
@@ -49,7 +56,6 @@ onready var max_speed_backup = MAX_SPEED
 enum {
 	MOVE_STATE,
 	WALL_STATE,
-	JUMPING,
 }
 
 var state = MOVE_STATE
@@ -80,8 +86,6 @@ func _physics_process(delta):
 			update_animations(input_vector)
 			
 		WALL_STATE:
-			
-			var input_vector = get_input_vector()
 			if animationPlayer.is_playing():
 				animationPlayer.stop()
 			if holding:
@@ -99,10 +103,6 @@ func _physics_process(delta):
 			wall_cling_check(wall_axis)
 			move()
 			wall_detach_check(wall_axis, delta)
-			
-		JUMPING:
-			var input_vector = Vector2.ZERO
-			jump_animating()
 			
 	if Input.is_key_pressed(KEY_ESCAPE):
 		get_tree().quit()
@@ -161,15 +161,11 @@ func jump_check():
 		just_jumped = false
 		
 		if Input.is_action_just_pressed("jump"):
-			state = JUMPING
+			animate_jump()
 			
 		if landingJumpTimer.is_stopped(): return
 		
-		if Input.is_action_pressed("jump"): jump(JUMP_FORCE)
-		else: jump(JUMP_FORCE/2)
-		
-		just_jumped = true
-		
+		animate_jump()
 		return
 		
 	if not Input.is_action_just_pressed("jump"):
@@ -189,9 +185,6 @@ func update_snap_vector():
 		snap_vector = Vector2.DOWN
 
 func wall_check():
-	
-	var on_wall = false
-	
 	if is_on_floor() and clingArea.monitoring == false:
 		clingArea.monitoring = true
 	
@@ -201,7 +194,6 @@ func wall_check():
 		wallClingTimer.set_paused(true)
 
 func wall_cling_check(wall_axis):
-	
 	if clingArea.get_overlapping_bodies().size() == 0:
 		state = MOVE_STATE
 		return
@@ -290,7 +282,6 @@ func move():
 	get_floor_velocity().length() == 0 and abs(velocity.x) < 1): 
 		position.x = last_position.x
 
-
 func update_animations(input_vector):
 	
 	if holding:
@@ -305,12 +296,12 @@ func update_animations(input_vector):
 	
 	if input_vector.x != 0:
 		if sprite.scale.x != sign(input_vector.x) and turnTimer.is_stopped():
-			turning = true
+			is_turning = true
 			turn_to = sign(input_vector.x)
 			turnTimer.start()
 		elif sprite.scale.x == sign(input_vector.x) and turnTimer.time_left > 0:
 			turnTimer.stop()
-			turning = false
+			is_turning = false
 			
 		if not turning:
 			if holding:
@@ -357,16 +348,13 @@ func jump_animating():
 		else:
 			animationPlayer.play("jump")
 		jumpTimer.start()
-	
 
 func _on_TurnTimer_timeout():
 	sprite.scale.x = turn_to
-	turning = false
-
+	is_turning = false
 
 func _on_JumpTimer_timeout():
 	jump(JUMP_FORCE)
 	velocity.x = AIR_MAX_SPEED * sign(sprite.scale.x) * abs(velocity.x/MAX_SPEED)
 	just_jumped = true
-	state = MOVE_STATE
 	move()
