@@ -323,7 +323,7 @@ func _on_TurnTimer_timeout():
 
 func _on_JumpTimer_timeout():
 	jump(JUMP_FORCE)
-	velocity.x = AIR_MAX_SPEED * sign(sprite.scale.x)
+	velocity.x = AIR_MAX_SPEED * sign(sprite.scale.x) * abs(velocity.x/MAX_SPEED)
 	just_jumped = true
 	state = MOVE_STATE
 	move()
