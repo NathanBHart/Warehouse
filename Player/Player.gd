@@ -13,6 +13,7 @@ export var AIR_MAX_SPEED = 120
 export var WALL_SLIDE_SPEED = 30
 export var ACCELERATED_WALL_SLIDE_SPEED = 60
 export var WALL_BOOST_SPEED = 140
+export var INERTIA = 25 # Added force of Inertia
 
 # Vectors
 var velocity = Vector2.ZERO
@@ -22,6 +23,7 @@ var snap_vector = Vector2.ZERO
 var just_jumped = false
 var is_jumping = false
 var just_boosted = false
+var idle = false
 
 # Platforming Controllers
 onready var coyoteTimer = $CoyoteTimer
@@ -61,6 +63,10 @@ func _ready():
 	MainInstances.Player = self
 	clingArea.monitoring = true
 
+func queue_free():
+	MainInstances.Player = null
+	.queue_free()
+
 func _physics_process(delta):
 	
 	holding = flashlight.flashlight_on
@@ -95,7 +101,6 @@ func _physics_process(delta):
 				sprite.scale.x = 1
 			else:
 				sprite.scale.x = -wall_axis
-			
 			wall_cling_check(wall_axis)
 			move()
 			wall_detach_check(wall_axis, delta)
@@ -115,10 +120,13 @@ func apply_gravity(delta):
 		is_jumping = false
 
 func apply_friction(input_vector):
-	if input_vector.x != 0: return
+	if input_vector.x != 0: 
+		idle = false
+		return
 	
 	if is_on_floor():
 		velocity.x = lerp(velocity.x, 0, FRICTION)
+		idle = true
 	else:
 		velocity.x = lerp(velocity.x, 0, AIR_RESISTANCE)
 
@@ -273,8 +281,27 @@ func move():
 	var last_velocity = velocity
 	var last_position = position
 	
+	# Changed "Infinite inertia" parameter to false (default was true)
 	velocity = (move_and_slide_with_snap(velocity, snap_vector * 4, Vector2.UP, 
-	true, 4, deg2rad(MAX_SLOPE_ANGLE)))
+	true, 4, deg2rad(MAX_SLOPE_ANGLE), false))
+	
+	# After moving and stuff, we can now apply forces to collided objects.
+	for index in get_slide_count():
+		var collision = get_slide_collision(index)
+		if collision.collider.is_class("RigidBody2D"):
+			
+			var normal = Vector2(-collision.normal)
+			
+			#**DISABLED FOR NOW**
+			# Check to see if the applied force is basically right or left
+			# Round it to that, plus a slight upward lift...
+			# This prevents weird floor jitter/rolling of cubes
+#			if normal.angle_to(Vector2.RIGHT) < PI/16:
+#				normal = Vector2.RIGHT
+#			elif normal.angle_to_point(Vector2.LEFT) < PI/16:
+#				normal = Vector2.LEFT
+			
+			collision.collider.apply_central_impulse(normal * INERTIA)
 	
 	# Just landed
 	if was_in_air and is_on_floor():
@@ -370,3 +397,6 @@ func _on_JumpTimer_timeout():
 	just_jumped = true
 	state = MOVE_STATE
 	move()
+
+func _on_Hurtbox_area_entered(_area):
+	queue_free()

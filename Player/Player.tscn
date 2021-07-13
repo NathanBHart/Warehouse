@@ -220,5 +220,16 @@ anims/jump-holding = SubResource( 6 )
 anims/run = SubResource( 7 )
 anims/run-holding = SubResource( 8 )
 
+[node name="Hurtbox" parent="." instance=ExtResource( 3 )]
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2( 0, -13 )
+shape = SubResource( 8 )
+
 [connection signal="timeout" from="AnimationTimers/TurnTimer" to="." method="_on_TurnTimer_timeout"]
 [connection signal="timeout" from="AnimationTimers/JumpTimer" to="." method="_on_JumpTimer_timeout"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+
+[editable path="Hurtbox"]
