@@ -75,7 +75,12 @@ func _physics_process(delta):
 			sprite.frame = 19
 			
 			var wall_axis = get_wall_axis()
-			sprite.scale.x = -wall_axis
+			
+			if wall_axis == 0:
+				sprite.scale.x = 1
+			else:
+				sprite.scale.x = -wall_axis
+			
 			wall_cling_check(wall_axis)
 			move()
 			wall_detach_check(wall_axis, delta)
