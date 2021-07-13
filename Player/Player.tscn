@@ -115,7 +115,7 @@ shape = SubResource( 2 )
 position = Vector2( 0, -14.4975 )
 texture = ExtResource( 2 )
 hframes = 40
-frame = 16
+frame = 19
 
 [node name="CoyoteTimer" type="Timer" parent="."]
 wait_time = 0.15

@@ -52,6 +52,7 @@ onready var max_speed_backup = MAX_SPEED
 enum {
 	MOVE_STATE,
 	WALL_STATE,
+	IDLE_STATE
 }
 
 var state = MOVE_STATE
@@ -72,6 +73,7 @@ func _physics_process(delta):
 		MOVE_STATE:
 			if jumpTimer.is_stopped():
 				var input_vector = get_input_vector()
+				idle_state_check()
 				reset_wall_cling_timer()
 				apply_horizontal_force(input_vector, delta)
 				apply_friction(input_vector)
@@ -86,7 +88,6 @@ func _physics_process(delta):
 				animationPlayer.stop()
 				
 			sprite.frame = 19
-			
 			var wall_axis = get_wall_axis()
 			
 			if wall_axis == 0:
@@ -94,9 +95,20 @@ func _physics_process(delta):
 			else:
 				sprite.scale.x = -wall_axis
 			
+			idle_state_check()
 			wall_cling_check(wall_axis)
 			move()
 			wall_detach_check(wall_axis, delta)
+		IDLE_STATE:
+			if Input.is_action_just_pressed("ui_focus_next"):
+				state = MOVE_STATE
+			if is_on_floor():
+				animationPlayer.play("idle")
+			else:
+				sprite.frame = 19
+			apply_gravity(delta)
+			apply_friction(Vector2.ZERO)
+			move()
 			
 	if Input.is_key_pressed(KEY_ESCAPE):
 		get_tree().quit()
@@ -253,6 +265,10 @@ func wall_detach_check(wall_axis, delta):
 				state = MOVE_STATE
 				clingArea.monitoring = false
 
+func idle_state_check():
+	if Input.is_action_just_pressed("ui_focus_next"):
+		state = IDLE_STATE
+
 func move():
 	var was_on_floor = is_on_floor()
 	var was_in_air = not is_on_floor()
@@ -324,5 +340,5 @@ func _on_JumpTimer_timeout():
 	just_jumped = true
 	move()
 
-func _on_Hurtbox_area_entered(area):
+func _on_Hurtbox_area_entered(_area):
 	queue_free()
