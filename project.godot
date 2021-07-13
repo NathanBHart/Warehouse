@@ -21,12 +21,8 @@ _global_script_class_icons={
 [application]
 
 config/name="Lost Tech Game Demo"
-run/main_scene="res://World/Main.tscn"
+run/main_scene="res://Rooms/Room1.tscn"
 config/icon="res://icon.png"
-
-[autoload]
-
-ResourceLoader="*res://Singletons/ResourceLoader.gd"
 
 [display]
 
@@ -86,6 +82,7 @@ slide_faster={
 [layer_names]
 
 2d_physics/layer_1="Player"
+2d_physics/layer_2="Environment"
 
 [physics]
 
