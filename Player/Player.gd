@@ -38,6 +38,8 @@ onready var jumpTimer = $AnimationTimers/JumpTimer
 var turning = false
 var turn_to = 1
 
+var MainInstances = ResourceLoader.MainInstances
+
 # Other Variables Created Onready
 onready var max_speed_backup = MAX_SPEED
 
@@ -50,7 +52,11 @@ enum {
 
 var state = MOVE_STATE
 
+# Signals
+signal hit_door(door)
+
 func _ready():
+	MainInstances.Player = self
 	clingArea.monitoring = true
 
 func _physics_process(delta):

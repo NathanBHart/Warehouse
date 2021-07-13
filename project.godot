@@ -21,7 +21,12 @@ _global_script_class_icons={
 [application]
 
 config/name="Lost Tech Game Demo"
+run/main_scene="res://World/Main.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+ResourceLoader="*res://Singletons/ResourceLoader.gd"
 
 [display]
 
