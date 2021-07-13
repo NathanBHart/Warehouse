@@ -63,8 +63,11 @@ func _ready():
 	MainInstances.Player = self
 	clingArea.monitoring = true
 
+func queue_free():
+	MainInstances.Player = null
+	.queue_free()
+
 func _physics_process(delta):
-	
 	match state:
 		MOVE_STATE:
 			if jumpTimer.is_stopped():
@@ -320,3 +323,6 @@ func _on_JumpTimer_timeout():
 	velocity.x = AIR_MAX_SPEED * sign(sprite.scale.x) * abs(velocity.x/MAX_SPEED)
 	just_jumped = true
 	move()
+
+func _on_Hurtbox_area_entered(area):
+	queue_free()
