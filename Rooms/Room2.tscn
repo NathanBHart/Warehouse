@@ -18,7 +18,10 @@ scale = Vector2( -1, 1 )
 CONNECTION = ExtResource( 3 )
 NEW_LEVEL_PATH = "res://Rooms/Room1.tscn"
 
+[node name="TopLeft" parent="Limits" index="0"]
+position = Vector2( -8, 8 )
+
 [node name="BottomRight" parent="Limits" index="1"]
-position = Vector2( 432, 192 )
+position = Vector2( 408, 200 )
 
 [editable path="MainTileMap"]
