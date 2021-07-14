@@ -2,9 +2,9 @@
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Graphics/Player/Player.png" type="Texture" id=2]
-[ext_resource path="res://Player/Player-Arm-Flashlight.png" type="Texture" id=3]
+[ext_resource path="res://Graphics/Player/Player-Arm-Flashlight.png" type="Texture" id=3]
 [ext_resource path="res://Player/Flashlight.gd" type="Script" id=4]
-[ext_resource path="res://Player/Flashlight-Beam.png" type="Texture" id=5]
+[ext_resource path="res://Graphics/Player/Flashlight-Beam.png" type="Texture" id=5]
 [ext_resource path="res://EnemyComponents/Hurtbox.tscn" type="PackedScene" id=6]
 
 [sub_resource type="CapsuleShape2D" id=1]

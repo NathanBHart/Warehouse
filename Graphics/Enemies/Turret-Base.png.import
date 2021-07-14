@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Flashlight-Beam.png-b7e9564a72938e9817604c38be56a7ff.stex"
+path="res://.import/Turret-Base.png-a019fbed696935894a939194c0a4e05d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/Flashlight-Beam.png"
-dest_files=[ "res://.import/Flashlight-Beam.png-b7e9564a72938e9817604c38be56a7ff.stex" ]
+source_file="res://Graphics/Enemies/Turret-Base.png"
+dest_files=[ "res://.import/Turret-Base.png-a019fbed696935894a939194c0a4e05d.stex" ]
 
 [params]
 

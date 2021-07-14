@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Player-Arm-Flashlight.png-54043b330f5b29514f1911c11b7cdc13.stex"
+path="res://.import/Flashlight-Beam.png-98f1e31eca7cdec8aee7890c1af923a5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/Player-Arm-Flashlight.png"
-dest_files=[ "res://.import/Player-Arm-Flashlight.png-54043b330f5b29514f1911c11b7cdc13.stex" ]
+source_file="res://Graphics/Player/Flashlight-Beam.png"
+dest_files=[ "res://.import/Flashlight-Beam.png-98f1e31eca7cdec8aee7890c1af923a5.stex" ]
 
 [params]
 
