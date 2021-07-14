@@ -1,5 +1,8 @@
 extends KinematicBody2D
 
+# Warning Ignores
+# warning-ignore:unused_signal
+
 # Export Constants
 export var MAX_SLOPE_ANGLE = 46
 export var JUMP_FORCE = 180
@@ -30,6 +33,7 @@ onready var coyoteTimer = $CoyoteTimer
 onready var landingJumpTimer = $LandingJumpTimer
 onready var wallClingTimer = $WallClingTimer
 onready var clingArea = $ClingArea
+onready var cameraFollow = $CameraFollow
 
 # Animation Controllers
 onready var sprite = $Sprite
@@ -62,6 +66,8 @@ signal hit_door(door)
 func _ready():
 	MainInstances.Player = self
 	clingArea.monitoring = true
+	call_deferred("assign_camera")
+	call_deferred("connect_hit_door")
 
 func queue_free():
 	MainInstances.Player = null
@@ -86,8 +92,6 @@ func _physics_process(delta):
 			update_animations(input_vector)
 			
 		WALL_STATE:
-			
-			var input_vector = get_input_vector()
 			if animationPlayer.is_playing():
 				animationPlayer.stop()
 			if holding:
@@ -106,11 +110,28 @@ func _physics_process(delta):
 			wall_detach_check(wall_axis, delta)
 			
 		JUMPING:
-			var input_vector = Vector2.ZERO
 			jump_animating()
 			
 	if Input.is_key_pressed(KEY_ESCAPE):
 		get_tree().quit()
+	
+	if Input.is_key_pressed(KEY_L):
+		SaverAndLoader.load_game()
+
+func save():
+	var save_dictionary = {
+		"filename": get_filename(),
+		"parent": get_parent().get_path(),
+		"position_x": position.x,
+		"position_y": position.y
+	}
+	return save_dictionary
+
+func assign_camera():
+	cameraFollow.remote_path = MainInstances.MainCamera.get_path()
+
+func connect_hit_door():
+	MainInstances.Player.connect("hit_door", MainInstances.Main, "_on_Player_hit_door")
 
 func apply_gravity(delta):
 	if is_on_floor(): return
@@ -197,9 +218,6 @@ func update_snap_vector():
 		snap_vector = Vector2.DOWN
 
 func wall_check():
-	
-	var on_wall = false
-	
 	if is_on_floor() and clingArea.monitoring == false:
 		clingArea.monitoring = true
 	

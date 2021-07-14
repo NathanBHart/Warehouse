@@ -6,7 +6,9 @@ onready var currentRoom = $Room1
 onready var canvasModulate = $CanvasModulate
 
 func _ready():
-	MainInstances.Player.connect("hit_door", self, "_on_Player_hit_door")
+	if SaverAndLoader.is_loading:
+		SaverAndLoader.load_game()
+		SaverAndLoader.is_loading = false
 	MainInstances.Main = self
 
 func change_rooms(door):

@@ -35,7 +35,7 @@ func _physics_process(_delta):
 func shoot_at_player(shoot_direction):
 	var turretProjectile = TurretProjectile.instance()
 	get_tree().current_scene.add_child(turretProjectile)
-	turretProjectile.global_position = position
+	turretProjectile.global_position = global_position
 	turretProjectile.velocity = shoot_direction * 300
 
 func _on_ShootTimer_timeout():
