@@ -18,8 +18,12 @@ var state = DO_NOT_MOVE
 func _physics_process(delta):
 	match state:
 		MOVE:
-			
-			var distance_scale_factor = position.distance_to(MainInstances.Player.position)/500
+			if MainInstances.Player == null:
+				state = DO_NOT_MOVE
+				return
+				
+			var distance_scale_factor = Vector2.ZERO
+			distance_scale_factor = position.distance_to(MainInstances.Player.position)/500
 			
 			gravity_scale = distance_scale_factor
 			
@@ -27,13 +31,15 @@ func _physics_process(delta):
 				state = DO_NOT_MOVE
 				
 			var mouse_position = get_global_mouse_position()
-			var direction = (mouse_position - position).normalized()
+			var direction = (mouse_position - global_position).normalized()
 			
 			apply_central_impulse(direction * delta * SPEED)
 				
 		DO_NOT_MOVE:
 			
 			gravity_scale = 1
+			
+			if MainInstances.Player == null: return
 			
 			if (mouse_detected and Input.is_action_pressed("use") and MainInstances.Player.idle):
 				state = MOVE

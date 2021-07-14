@@ -16,7 +16,15 @@ func _ready():
 		parent.currentRoom = self
 		
 	call_deferred("set_modulate", BASE_COLOR)
-	
+
+func save():
+	var save_dictionary = {
+		"filename": get_filename(),
+		"parent": get_parent().get_path(),
+		"position_x": position.x,
+		"position_y": position.y
+	}
+	return save_dictionary
 
 func set_camera_limits():
 	var MainCamera = MainInstances.MainCamera
