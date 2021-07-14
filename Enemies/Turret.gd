@@ -82,7 +82,7 @@ func shoot_at_player(shoot_direction):
 	animationPlayer.play("fire")
 	var turretProjectile = TurretProjectile.instance()
 	get_tree().current_scene.add_child(turretProjectile)
-	turretProjectile.global_position = position
+	turretProjectile.global_position = global_position
 	turretProjectile.velocity = shoot_direction * 300
 
 

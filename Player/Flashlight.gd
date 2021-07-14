@@ -4,7 +4,7 @@ onready var light = $Light2D
 
 export var flashlight_on = false
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var mouse_difference = get_global_mouse_position().y - global_position.y
 	
 	mouse_difference = clamp(mouse_difference, -50, 50)

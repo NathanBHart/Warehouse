@@ -157,7 +157,9 @@ tracks/1/keys = {
 [sub_resource type="CapsuleShape2D" id=9]
 radius = 5.0
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"Persists",
+]]
 collision_mask = 2
 script = ExtResource( 1 )
 
@@ -231,6 +233,9 @@ collision_mask = 8
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 position = Vector2( 0, -13 )
 shape = SubResource( 9 )
+
+[node name="CameraFollow" type="RemoteTransform2D" parent="."]
+remote_path = NodePath("../../Camera")
 
 [connection signal="timeout" from="AnimationTimers/TurnTimer" to="." method="_on_TurnTimer_timeout"]
 [connection signal="timeout" from="AnimationTimers/JumpTimer" to="." method="_on_JumpTimer_timeout"]
