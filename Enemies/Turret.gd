@@ -1,22 +1,29 @@
 extends "res://Enemies/Enemy.gd"
 
+export (float, 0, 250) var RANGE = 200
+export (float, 0.01, 5) var SPEED = 1
+export (float, 0, 1) var ACCURACY = 0.2
+export (float, 0.01, 10) var WAIT_DELAY = 1
+
 onready var shootTimer = $ShootTimer
 onready var windUpTimer = $WindUpTimer
 onready var aimingTimer = $AimingTimer
 onready var collision = $CollisionShape2D
 onready var animationPlayer = $AnimationPlayer
-onready var raycast = $RayCast2D
+onready var aim = $Aim
+onready var fire = $Fire
 
 onready var head = $Head
 
-const TurretProjectile = preload("res://EnemyComponents/TurretProjectile.tscn")
-
-var MainInstances = ResourceLoader.MainInstances
+const bulletSpray = preload("res://Graphics/Effects/BulletHitSpray.tscn")
+const bulletImpact = preload("res://Graphics/Effects/BulletImpact.tscn")
 
 enum {
 	DEACTIVATED,
 	ACTIVATED
 }
+
+var MainInstances = ResourceLoader.MainInstances
 
 var state = ACTIVATED
 var shooting = false
@@ -25,34 +32,34 @@ var direction = Vector2.ZERO
 
 
 func _ready():
-	raycast.global_rotation = 0
-
+	aim.global_rotation = 0
+	fire.global_rotation = 0
+	randomize()
 
 func _physics_process(_delta):
 	match state:
 		DEACTIVATED:
-			if not shootTimer.is_stopped():
-				shootTimer.stop()
-				
-			animationPlayer.play("idle")
-			shooting = false
-			winding_up = false
+			go_idle()
+			
+			if MainInstances.CurrentRoom.lights_on or MainInstances.Player.flashlight.flashlight_on:
+				state = ACTIVATED
 
 		ACTIVATED:
+			
+			if !MainInstances.CurrentRoom.lights_on and !MainInstances.Player.flashlight.flashlight_on:
+				state = DEACTIVATED
 			
 			var player_pos = Vector2.ZERO
 			
 			if MainInstances.Player != null:
-				player_pos = MainInstances.Player.global_position + Vector2(0, -8)
+				player_pos = MainInstances.Player.global_position + Vector2(0, -16)
 			else:
 				state = DEACTIVATED
 			
-			raycast.cast_to = player_pos - global_position
+			aim.cast_to = player_pos - global_position
 			
-			if raycast.is_colliding() or global_position.distance_to(player_pos) > 250:
-				animationPlayer.play("idle")
-				shooting = false
-				winding_up = false
+			if aim.is_colliding() or global_position.distance_to(player_pos) > RANGE:
+				go_idle()
 				
 			else:
 				
@@ -62,9 +69,13 @@ func _physics_process(_delta):
 					if shootTimer.is_stopped():
 						direction = (player_pos - global_position).normalized()
 						# Gets perpendicular vector and distributes it across the perpendicular
-						direction += Vector2(-direction.y/30, direction.x/30) * rand_range(-1,1)
+						direction += Vector2(1, -(direction.x/direction.y)).normalized() * rand_range(-1,1) * ACCURACY
 						
+						var wait_delay = rand_range(SPEED-SPEED/5,SPEED+SPEED/5)
+						
+						shootTimer.wait_time = wait_delay
 						shootTimer.start()
+						fire.cast_to = direction * RANGE
 				
 				elif winding_up:
 					if windUpTimer.is_stopped():
@@ -73,23 +84,51 @@ func _physics_process(_delta):
 					
 				else:
 					if aimingTimer.is_stopped():
-						aimingTimer.wait_time = rand_range(0.7,1.2)
+						aimingTimer.wait_time = WAIT_DELAY
 						aimingTimer.start()
 					animationPlayer.play("targeting")
 
-func shoot_at_player(shoot_direction):
+func go_idle():
+	if not shootTimer.is_stopped():
+		shootTimer.stop()
+				
+	animationPlayer.play("idle")
+	shooting = false
+	winding_up = false
+	
+	rotate_towards_absolute(get_direction_vector(global_rotation), 15, head)
+
+
+func shoot_at_player():
 	animationPlayer.stop()
 	animationPlayer.play("fire")
-	var turretProjectile = TurretProjectile.instance()
-	get_tree().current_scene.add_child(turretProjectile)
-	turretProjectile.global_position = global_position
-	turretProjectile.velocity = shoot_direction * 300
+	
+	#get_collider seems to take a moment after casting the ray to work, so
+	#I put the casting before the delay.
+	
+	var collider = fire.get_collider()
+	
+	if collider == MainInstances.Player.hurtbox or collider == null:
+		return
 
+	var hit_area = fire.get_collision_point()
+	var normal = fire.get_collision_normal()
+	
+	var spray_effect = bulletSpray.instance()
+	spray_effect.global_position = hit_area
+	spray_effect.direction = normal
+	
+	var impact_effect = bulletImpact.instance()
+	impact_effect.global_position = hit_area
+	
+	get_tree().current_scene.add_child(spray_effect)
+	get_tree().current_scene.add_child(impact_effect)
+	impact_effect.look_at(hit_area + normal)
 
 # I borrowed these two functions from another project I did because it's really
 # tedious to recode.
-func get_direction_vector(direction):
-	return Vector2(cos(direction), sin(direction)).normalized()
+func get_direction_vector(obj_direction):
+	return Vector2(cos(obj_direction), sin(obj_direction)).normalized()
 
 
 func rotate_towards_absolute(relative_point: Vector2, speed_modifier: int, entity: Node2D = self):
@@ -109,7 +148,6 @@ func rotate_towards_absolute(relative_point: Vector2, speed_modifier: int, entit
 	# Move move the direction vector towards the target vector, and then
 	# nomalize it.
 	var direction_delta = target_vector - direction_vector
-	var temp = direction_vector
 	direction_vector += direction_delta / speed_modifier
 	direction_vector.normalized()
 	
@@ -123,7 +161,7 @@ func rotate_towards_absolute(relative_point: Vector2, speed_modifier: int, entit
 
 
 func _on_ShootTimer_timeout():
-	shoot_at_player(direction)
+	shoot_at_player()
 
 
 func _on_WindUpTimer_timeout():

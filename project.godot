@@ -26,8 +26,8 @@ config/icon="res://icon.png"
 
 [autoload]
 
-ResourceLoader="*res://Singletons/ResourceLoader.gd"
 SaverAndLoader="*res://Singletons/SaverAndLoader.gd"
+ResourceLoader="*res://Singletons/ResourceLoader.gd"
 
 [display]
 

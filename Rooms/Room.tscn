@@ -9,6 +9,8 @@
 ]]
 script = ExtResource( 2 )
 
+[node name="Lights" type="Node2D" parent="."]
+
 [node name="MainTileMap" parent="." instance=ExtResource( 3 )]
 
 [node name="TileMap" parent="." instance=ExtResource( 1 )]
