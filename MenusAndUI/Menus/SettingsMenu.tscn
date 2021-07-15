@@ -1,0 +1,262 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://MenusAndUI/MainTheme.tres" type="Theme" id=1]
+[ext_resource path="res://MenusAndUI/Menus/SettingsMenu.gd" type="Script" id=2]
+
+[node name="SettingsMenu" type="Control"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 315.0
+margin_bottom = 175.0
+custom_constants/side_margin = 0
+tab_align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Video" type="Tabs" parent="MarginContainer/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 30.0
+margin_right = -5.0
+margin_bottom = -5.0
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/TabContainer/Video"]
+margin_right = 300.0
+margin_bottom = 135.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Video/MarginContainer2"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 290.0
+margin_bottom = 125.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Video/MarginContainer2/HBoxContainer"]
+margin_right = 193.0
+margin_bottom = 115.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 7.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/Video/MarginContainer2/HBoxContainer/VBoxContainer"]
+margin_right = 193.0
+margin_bottom = 23.0
+text = "Brightness"
+
+[node name="BrightnessSlider" type="HSlider" parent="MarginContainer/TabContainer/Video/MarginContainer2/HBoxContainer/VBoxContainer"]
+margin_top = 27.0
+margin_right = 193.0
+margin_bottom = 43.0
+
+[node name="Control" type="Control" parent="MarginContainer/TabContainer/Video/MarginContainer2/HBoxContainer"]
+margin_left = 197.0
+margin_right = 280.0
+margin_bottom = 115.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Video/MarginContainer2/HBoxContainer/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackButton1" type="Button" parent="MarginContainer/TabContainer/Video/MarginContainer2/HBoxContainer/Control/VBoxContainer"]
+margin_top = 90.0
+margin_right = 83.0
+margin_bottom = 115.0
+text = "Back"
+
+[node name="Audio" type="Tabs" parent="MarginContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 30.0
+margin_right = -5.0
+margin_bottom = -5.0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Audio"]
+margin_right = 300.0
+margin_bottom = 135.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Audio/MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 290.0
+margin_bottom = 125.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Audio/MarginContainer/HBoxContainer"]
+margin_right = 193.0
+margin_bottom = 115.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 7.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/Audio/MarginContainer/HBoxContainer/VBoxContainer"]
+margin_right = 193.0
+margin_bottom = 23.0
+text = "Sound Effects"
+
+[node name="SoundEffectsSlider" type="HSlider" parent="MarginContainer/TabContainer/Audio/MarginContainer/HBoxContainer/VBoxContainer"]
+margin_top = 27.0
+margin_right = 193.0
+margin_bottom = 43.0
+
+[node name="Label2" type="Label" parent="MarginContainer/TabContainer/Audio/MarginContainer/HBoxContainer/VBoxContainer"]
+margin_top = 47.0
+margin_right = 193.0
+margin_bottom = 70.0
+text = "Music"
+
+[node name="MusicSlider" type="HSlider" parent="MarginContainer/TabContainer/Audio/MarginContainer/HBoxContainer/VBoxContainer"]
+margin_top = 74.0
+margin_right = 193.0
+margin_bottom = 90.0
+
+[node name="Control" type="Control" parent="MarginContainer/TabContainer/Audio/MarginContainer/HBoxContainer"]
+margin_left = 197.0
+margin_right = 280.0
+margin_bottom = 115.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Audio/MarginContainer/HBoxContainer/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackButton2" type="Button" parent="MarginContainer/TabContainer/Audio/MarginContainer/HBoxContainer/Control/VBoxContainer"]
+margin_top = 90.0
+margin_right = 83.0
+margin_bottom = 115.0
+text = "Back"
+
+[node name="Gameplay" type="Tabs" parent="MarginContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 30.0
+margin_right = -265.0
+margin_bottom = -115.0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Gameplay"]
+margin_right = 300.0
+margin_bottom = 135.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Gameplay/MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 290.0
+margin_bottom = 125.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Gameplay/MarginContainer/HBoxContainer"]
+margin_right = 193.0
+margin_bottom = 115.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 7.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/Gameplay/MarginContainer/HBoxContainer/VBoxContainer"]
+margin_right = 193.0
+margin_bottom = 23.0
+text = "Difficulty"
+
+[node name="DifficultySlider" type="HSlider" parent="MarginContainer/TabContainer/Gameplay/MarginContainer/HBoxContainer/VBoxContainer"]
+margin_top = 27.0
+margin_right = 193.0
+margin_bottom = 43.0
+
+[node name="Control" type="Control" parent="MarginContainer/TabContainer/Gameplay/MarginContainer/HBoxContainer"]
+margin_left = 197.0
+margin_right = 280.0
+margin_bottom = 115.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Gameplay/MarginContainer/HBoxContainer/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackButton3" type="Button" parent="MarginContainer/TabContainer/Gameplay/MarginContainer/HBoxContainer/Control/VBoxContainer"]
+margin_top = 90.0
+margin_right = 83.0
+margin_bottom = 115.0
+text = "Back"
+
+[connection signal="pressed" from="MarginContainer/TabContainer/Video/MarginContainer2/HBoxContainer/Control/VBoxContainer/BackButton1" to="." method="_on_BackButton1_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Audio/MarginContainer/HBoxContainer/Control/VBoxContainer/BackButton2" to="." method="_on_BackButton2_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Gameplay/MarginContainer/HBoxContainer/Control/VBoxContainer/BackButton3" to="." method="_on_BackButton3_pressed"]

@@ -114,12 +114,6 @@ func _physics_process(delta):
 			
 		JUMPING:
 			jump_animating()
-			
-	if Input.is_key_pressed(KEY_ESCAPE):
-		get_tree().quit()
-	
-	if Input.is_key_pressed(KEY_L):
-		SaverAndLoader.load_game()
 
 func save():
 	var save_dictionary = {
