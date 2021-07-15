@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://MenusAndUI/Menus/PauseMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Rooms/Room1.tscn" type="PackedScene" id=3]
 [ext_resource path="res://World/Main.gd" type="Script" id=4]
 [ext_resource path="res://Player/Camera.tscn" type="PackedScene" id=5]
+[ext_resource path="res://MenusAndUI/Menus/SettingsMenu.tscn" type="PackedScene" id=6]
 
 [node name="Main" type="Node"]
 script = ExtResource( 4 )
@@ -17,3 +19,12 @@ position = Vector2( 68.6123, 82.097 )
 position = Vector2( 68.6123, 82.097 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="SettingsMenu" parent="CanvasLayer" instance=ExtResource( 6 )]
+visible = false
+IN_MAIN = true
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource( 2 )]
+visible = false

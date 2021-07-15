@@ -23,7 +23,7 @@ NEW_LEVEL_PATH = "res://Rooms/Room1.tscn"
 position = Vector2( 0, 16 )
 
 [node name="BottomRight" parent="Limits" index="1"]
-position = Vector2( 408, 200 )
+position = Vector2( 312, 200 )
 
 [node name="SaveStation" parent="." index="4" instance=ExtResource( 4 )]
 position = Vector2( 240, 176 )
