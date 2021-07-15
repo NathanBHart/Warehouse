@@ -1,7 +1,10 @@
-[gd_scene load_steps=99 format=2]
+[gd_scene load_steps=103 format=2]
 
 [ext_resource path="res://Graphics/Tilesets/tileset_Tilemap-Main-v2.png" type="Texture" id=1]
 [ext_resource path="res://Graphics/Tilesets/Wall-Tile-Sheet.png" type="Texture" id=2]
+[ext_resource path="res://Graphics/Tilesets/Wall-Decos.png" type="Texture" id=3]
+[ext_resource path="res://Graphics/Tilesets/Wall-Stains.png" type="Texture" id=4]
+[ext_resource path="res://Graphics/Tilesets/Wall-Lines-Small.png" type="Texture" id=5]
 
 [sub_resource type="OccluderPolygon2D" id=1]
 polygon = PoolVector2Array( 6, 6, 16, 6, 16, 16, 6, 16 )
@@ -616,6 +619,71 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 0/shapes = [  ]
 0/z_index = 0
 
+[sub_resource type="TileSet" id=97]
+0/name = "Wall-Decos.png 0"
+0/texture = ExtResource( 3 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 256, 64 )
+0/tile_mode = 2
+0/autotile/icon_coordinate = Vector2( 2, 0 )
+0/autotile/tile_size = Vector2( 64, 64 )
+0/autotile/spacing = 0
+0/autotile/occluder_map = [  ]
+0/autotile/navpoly_map = [  ]
+0/autotile/priority_map = [  ]
+0/autotile/z_index_map = [  ]
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+2/name = "Wall-Stains.png 2"
+2/texture = ExtResource( 4 )
+2/tex_offset = Vector2( 0, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 0, 0, 128, 64 )
+2/tile_mode = 2
+2/autotile/icon_coordinate = Vector2( 0, 0 )
+2/autotile/tile_size = Vector2( 64, 64 )
+2/autotile/spacing = 0
+2/autotile/occluder_map = [  ]
+2/autotile/navpoly_map = [  ]
+2/autotile/priority_map = [  ]
+2/autotile/z_index_map = [  ]
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape_one_way = false
+2/shape_one_way_margin = 0.0
+2/shapes = [  ]
+2/z_index = 0
+4/name = "Wall-Lines-Small.png 4"
+4/texture = ExtResource( 5 )
+4/tex_offset = Vector2( 0, 0 )
+4/modulate = Color( 1, 1, 1, 1 )
+4/region = Rect2( 0, 0, 256, 16 )
+4/tile_mode = 2
+4/autotile/icon_coordinate = Vector2( 0, 0 )
+4/autotile/tile_size = Vector2( 16, 16 )
+4/autotile/spacing = 0
+4/autotile/occluder_map = [  ]
+4/autotile/navpoly_map = [  ]
+4/autotile/priority_map = [  ]
+4/autotile/z_index_map = [  ]
+4/occluder_offset = Vector2( 0, 0 )
+4/navigation_offset = Vector2( 0, 0 )
+4/shape_offset = Vector2( 0, 0 )
+4/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+4/shape_one_way = false
+4/shape_one_way_margin = 0.0
+4/shapes = [  ]
+4/z_index = -1
+
 [node name="MainTileMap" type="TileMap"]
 tile_set = SubResource( 95 )
 cell_size = Vector2( 16, 16 )
@@ -626,4 +694,10 @@ format = 1
 z_index = -5
 tile_set = SubResource( 96 )
 cell_size = Vector2( 32, 32 )
+format = 1
+
+[node name="WallDecorations" type="TileMap" parent="."]
+z_index = -4
+tile_set = SubResource( 97 )
+cell_size = Vector2( 8, 8 )
 format = 1

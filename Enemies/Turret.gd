@@ -19,13 +19,13 @@ const bulletSpray = preload("res://Graphics/Effects/BulletHitSpray.tscn")
 const bulletImpact = preload("res://Graphics/Effects/BulletImpact.tscn")
 
 enum {
-	DEACTIVATED,
-	ACTIVATED
+	IDLE,
+	ACTIVE
 }
 
 var MainInstances = ResourceLoader.MainInstances
 
-var state = ACTIVATED
+var state = ACTIVE
 var shooting = false
 var winding_up = false
 var direction = Vector2.ZERO
@@ -38,32 +38,22 @@ func _ready():
 
 func _physics_process(_delta):
 	match state:
-		DEACTIVATED:
+		IDLE:
 			go_idle()
 			
-			if MainInstances.CurrentRoom.lights_on or MainInstances.Player.flashlight.flashlight_on:
-				state = ACTIVATED
+			if check_for_player() and check_lights():
+				state = ACTIVE
 
-		ACTIVATED:
+		ACTIVE:
 			
-			if !MainInstances.CurrentRoom.lights_on and !MainInstances.Player.flashlight.flashlight_on:
-				state = DEACTIVATED
+			var player_pos = check_for_player()
 			
-			var player_pos = Vector2.ZERO
-			
-			if MainInstances.Player != null:
-				player_pos = MainInstances.Player.global_position + Vector2(0, -16)
-			else:
-				state = DEACTIVATED
-			
-			aim.cast_to = player_pos - global_position
-			
-			if aim.is_colliding() or global_position.distance_to(player_pos) > RANGE:
-				go_idle()
+			if not player_pos:
+				state = IDLE
+				return
 				
 			else:
-				
-				rotate_towards_absolute(player_pos - global_position, 5, head)
+				rotate_towards_absolute(player_pos - global_position, 15, head)
 				
 				if shooting:
 					if shootTimer.is_stopped():
@@ -97,6 +87,26 @@ func go_idle():
 	winding_up = false
 	
 	rotate_towards_absolute(get_direction_vector(global_rotation), 15, head)
+
+
+func check_for_player():
+	var player_pos = Vector2.ZERO
+			
+	if MainInstances.Player != null:
+		player_pos = MainInstances.Player.global_position + Vector2(0, -16)
+	else:
+		return false
+	
+	aim.cast_to = player_pos - global_position
+	
+	if aim.is_colliding() or global_position.distance_to(player_pos) > RANGE:
+		return false
+	else:
+		return player_pos
+
+
+func check_lights():
+	return MainInstances.CurrentRoom.lights_on or MainInstances.Player.flashlight.flashlight_on
 
 
 func shoot_at_player():
