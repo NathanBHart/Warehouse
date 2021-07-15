@@ -42,6 +42,9 @@ onready var turnTimer = $AnimationTimers/TurnTimer
 onready var jumpTimer = $AnimationTimers/JumpTimer
 onready var flashlight = $Sprite/Flashlight
 
+#Hitbox
+onready var hurtbox = $Hurtbox
+
 var turning = false
 var turn_to = 1
 var holding = true
@@ -75,7 +78,7 @@ func queue_free():
 
 func _physics_process(delta):
 	
-	holding = flashlight.flashlight_on
+	#holding = flashlight.flashlight_on
 	
 	match state:
 		

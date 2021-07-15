@@ -1,11 +1,13 @@
 extends Node2D
 
 export (Color) var BASE_COLOR = Color.white
+export (bool) var lights_on = true
 
 const MAIN = preload("res://World/Main.gd")
 
 onready var topLeft = $Limits/TopLeft
 onready var bottomRight = $Limits/BottomRight
+onready var lights = $Lights
 
 var MainInstances = ResourceLoader.MainInstances
 
@@ -16,6 +18,10 @@ func _ready():
 		parent.currentRoom = self
 		
 	call_deferred("set_modulate", BASE_COLOR)
+	
+	lights.visible = lights_on
+	
+	MainInstances.CurrentRoom = self
 
 func save():
 	var save_dictionary = {
@@ -36,3 +42,8 @@ func set_camera_limits():
 
 func set_modulate(color):
 	MainInstances.Main.canvasModulate.color = color
+	
+func flip_lights():
+	lights_on = !lights_on
+	lights.visible = lights_on
+	

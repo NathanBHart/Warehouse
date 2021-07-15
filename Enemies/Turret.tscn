@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Enemies/Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Enemies/Turret.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Graphics/Enemies/Turret-Base.png" type="Texture" id=4]
 [ext_resource path="res://Graphics/Enemies/light.png" type="Texture" id=5]
 [ext_resource path="res://Graphics/Enemies/Laser-Beam.png" type="Texture" id=6]
+[ext_resource path="res://Graphics/Enemies/Gun-Fire.png" type="Texture" id=7]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 3.67125
@@ -14,7 +15,7 @@ height = 4.33012
 [sub_resource type="Animation" id=2]
 resource_name = "fire"
 length = 0.2
-step = 0.06
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Head:frame")
 tracks/0/interp = 1
@@ -87,6 +88,78 @@ tracks/5/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("Head/GunFire:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Head/GunFire:frame")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Head/GunFire/Light2D:energy")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 1.0, 0.3, 0.0 ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Head/Glow:energy")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 3.0 ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Head/Glow/Spotlight:energy")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 2.0 ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Head/Glow:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=3]
 resource_name = "idle"
@@ -139,6 +212,42 @@ tracks/3/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Head/GunFire:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Head/Glow:energy")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Head/Glow/Spotlight:energy")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -215,6 +324,18 @@ tracks/5/keys = {
 "update": 0,
 "values": [ 1.0 ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("Head/GunFire:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=5]
 length = 0.5
@@ -278,44 +399,98 @@ tracks/4/keys = {
 "update": 0,
 "values": [ 1.0, 0.75, 0.5, 0.25 ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Head/GunFire:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Head/Glow:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Head/Glow:energy")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 3.0 ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Head/Glow/Spotlight:energy")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 2.0 ]
+}
 
 [node name="Turret" instance=ExtResource( 1 )]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource( 2 )
 
-[node name="RayCast2D" type="RayCast2D" parent="." index="0"]
+[node name="Aim" type="RayCast2D" parent="." index="0"]
 position = Vector2( 3.46479, 0 )
 enabled = true
 cast_to = Vector2( 0, 0 )
 collision_mask = 2
 
-[node name="CollisionShape2D" parent="." index="1"]
+[node name="Fire" type="RayCast2D" parent="." index="1"]
+enabled = true
+collision_mask = 6
+collide_with_areas = true
+
+[node name="CollisionShape2D" parent="." index="2"]
 visible = false
 position = Vector2( -0.866196, 0 )
 shape = SubResource( 1 )
 
-[node name="ShootTimer" type="Timer" parent="." index="2"]
+[node name="ShootTimer" type="Timer" parent="." index="3"]
 one_shot = true
 
-[node name="WindUpTimer" type="Timer" parent="." index="3"]
+[node name="WindUpTimer" type="Timer" parent="." index="4"]
 wait_time = 0.5
 one_shot = true
 
-[node name="AimingTimer" type="Timer" parent="." index="4"]
+[node name="AimingTimer" type="Timer" parent="." index="5"]
 one_shot = true
 
-[node name="Base" type="Sprite" parent="." index="5"]
+[node name="Base" type="Sprite" parent="." index="6"]
 texture = ExtResource( 4 )
 offset = Vector2( 5, 0 )
 
-[node name="Head" type="Sprite" parent="." index="6"]
+[node name="Head" type="Sprite" parent="." index="7"]
 texture = ExtResource( 3 )
 offset = Vector2( 5, 0 )
 hframes = 9
+frame = 1
 
 [node name="FrontLight" type="Light2D" parent="Head" index="0"]
-position = Vector2( 5.53803, 0.559541 )
+position = Vector2( 4.53516, 0.559541 )
 scale = Vector2( 0.00479025, 0.00479025 )
 texture = ExtResource( 5 )
 color = Color( 1, 0, 0, 1 )
@@ -331,10 +506,40 @@ energy = 1.5
 [node name="Laser" type="Light2D" parent="Head" index="2"]
 position = Vector2( 13.7762, -4.48903 )
 scale = Vector2( 0.114583, 0.114583 )
+enabled = false
 texture = ExtResource( 6 )
 color = Color( 1, 0, 0, 1 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="7"]
+[node name="Glow" type="Light2D" parent="Head" index="3"]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( -1.56589, 0.176466 )
+scale = Vector2( 0.0100505, 0.0100505 )
+texture = ExtResource( 5 )
+energy = 0.0
+
+[node name="Spotlight" type="Light2D" parent="Head/Glow" index="0"]
+position = Vector2( 4851.43, 4.88997 )
+scale = Vector2( 99.498, 50 )
+texture = ExtResource( 6 )
+energy = 0.0
+shadow_enabled = true
+shadow_filter = 5
+shadow_filter_smooth = 7.0
+
+[node name="GunFire" type="Sprite" parent="Head" index="4"]
+visible = false
+position = Vector2( 17.7898, 0 )
+texture = ExtResource( 7 )
+hframes = 3
+
+[node name="Light2D" type="Light2D" parent="Head/GunFire" index="0"]
+position = Vector2( -1.1947, 0.0321825 )
+scale = Vector2( 0.0247732, 0.0247732 )
+texture = ExtResource( 5 )
+color = Color( 0.984314, 0.764706, 0.568627, 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="8"]
 anims/fire = SubResource( 2 )
 anims/idle = SubResource( 3 )
 anims/targeting = SubResource( 4 )
