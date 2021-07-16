@@ -15,8 +15,8 @@ onready var fire = $Fire
 
 onready var head = $Head
 
-const bulletSpray = preload("res://Graphics/Effects/BulletHitSpray.tscn")
-const bulletImpact = preload("res://Graphics/Effects/BulletImpact.tscn")
+const BulletSpray = preload("res://Graphics/Effects/BulletHitSpray.tscn")
+const BulletImpact = preload("res://Graphics/Effects/BulletImpact.tscn")
 
 enum {
 	IDLE,
@@ -125,16 +125,12 @@ func shoot_at_player():
 	var hit_area = fire.get_collision_point()
 	var normal = fire.get_collision_normal()
 	
-	var spray_effect = bulletSpray.instance()
-	spray_effect.global_position = hit_area
-	spray_effect.direction = normal
+	var bulletSpray = Utils.instance_scene_on_main(BulletSpray, hit_area)
+	bulletSpray.direction = normal
 	
-	var impact_effect = bulletImpact.instance()
-	impact_effect.global_position = hit_area
+	var bulletImpact = Utils.instance_scene_on_main(BulletImpact, hit_area)
 	
-	get_tree().current_scene.add_child(spray_effect)
-	get_tree().current_scene.add_child(impact_effect)
-	impact_effect.look_at(hit_area + normal)
+	bulletImpact.look_at(hit_area + normal)
 
 # I borrowed these two functions from another project I did because it's really
 # tedious to recode.
