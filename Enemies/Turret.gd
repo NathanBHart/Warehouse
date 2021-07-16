@@ -157,8 +157,10 @@ func shoot_at_player():
 	impact_effect.global_position = hit_area
 	
 	get_tree().current_scene.add_child(spray_effect)
-	get_tree().current_scene.add_child(impact_effect)
-	impact_effect.look_at(hit_area + normal)
+	
+	if not collider is RigidBody2D:
+		get_tree().current_scene.add_child(impact_effect)
+		impact_effect.look_at(hit_area + normal)
 
 # I borrowed these two functions from another project I did because it's really
 # tedious to recode.

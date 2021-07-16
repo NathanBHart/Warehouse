@@ -14,11 +14,10 @@ height = 16.8485
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 5.6249, 1.78385 )
 
-[sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 6.71441, 1.71164 )
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 4.40022, 1.71164 )
 
-[sub_resource type="Animation" id=3]
-resource_name = "idle-holding"
+[sub_resource type="Animation" id=4]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -34,8 +33,7 @@ tracks/0/keys = {
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "idle-holding"
+[sub_resource type="Animation" id=5]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -63,8 +61,7 @@ tracks/1/keys = {
 "values": [ Vector2( 2, -3 ), Vector2( 2, -4 ) ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "jump"
+[sub_resource type="Animation" id=6]
 length = 0.2
 step = 0.05
 tracks/0/type = "value"
@@ -80,8 +77,7 @@ tracks/0/keys = {
 "values": [ 13, 14, 15, 16 ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "jump-holding"
+[sub_resource type="Animation" id=7]
 length = 0.2
 step = 0.05
 tracks/0/type = "value"
@@ -109,8 +105,7 @@ tracks/1/keys = {
 "values": [ Vector2( 2, -1 ), Vector2( 2, 0 ), Vector2( 2, -1 ), Vector2( 2, -3 ) ]
 }
 
-[sub_resource type="Animation" id=7]
-resource_name = "run-holding"
+[sub_resource type="Animation" id=8]
 length = 0.5
 loop = true
 step = 0.05
@@ -127,8 +122,7 @@ tracks/0/keys = {
 "values": [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "run-holding"
+[sub_resource type="Animation" id=9]
 length = 0.5
 loop = true
 step = 0.05
@@ -157,7 +151,7 @@ tracks/1/keys = {
 "values": [ Vector2( 2, -2 ), Vector2( 2, -1 ), Vector2( 2, -2 ), Vector2( 2, -1 ), Vector2( 2, -2 ) ]
 }
 
-[sub_resource type="CapsuleShape2D" id=9]
+[sub_resource type="CapsuleShape2D" id=10]
 radius = 5.61099
 height = 19.3951
 
@@ -184,7 +178,8 @@ collision_layer = 0
 collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformChecker"]
-shape = SubResource( 10 )
+position = Vector2( 0, -1.79369 )
+shape = SubResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -14.4975 )
@@ -230,12 +225,12 @@ wait_time = 0.1
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/idle = SubResource( 3 )
-anims/idle-holding = SubResource( 4 )
-anims/jump = SubResource( 5 )
-anims/jump-holding = SubResource( 6 )
-anims/run = SubResource( 7 )
-anims/run-holding = SubResource( 8 )
+anims/idle = SubResource( 4 )
+anims/idle-holding = SubResource( 5 )
+anims/jump = SubResource( 6 )
+anims/jump-holding = SubResource( 7 )
+anims/run = SubResource( 8 )
+anims/run-holding = SubResource( 9 )
 
 [node name="Hurtbox" parent="." instance=ExtResource( 6 )]
 monitorable = false
@@ -244,7 +239,7 @@ collision_mask = 8
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 position = Vector2( 0, -13.0096 )
-shape = SubResource( 9 )
+shape = SubResource( 10 )
 
 [node name="CameraFollow" type="RemoteTransform2D" parent="."]
 remote_path = NodePath("../../Camera")
