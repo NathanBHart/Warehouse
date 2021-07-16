@@ -89,6 +89,12 @@ margin_top = 27.0
 margin_right = 193.0
 margin_bottom = 43.0
 
+[node name="CheckBox" type="CheckBox" parent="MarginContainer/TabContainer/Video/MarginContainer2/HBoxContainer/VBoxContainer"]
+margin_top = 47.0
+margin_right = 193.0
+margin_bottom = 71.0
+text = "Fullscreen"
+
 [node name="Control" type="Control" parent="MarginContainer/TabContainer/Video/MarginContainer2/HBoxContainer"]
 margin_left = 197.0
 margin_right = 280.0
