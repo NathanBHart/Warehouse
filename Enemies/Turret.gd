@@ -88,7 +88,6 @@ func go_idle():
 	
 	rotate_towards_absolute(get_direction_vector(global_rotation), 15, head)
 
-
 func check_for_player():
 	var player_pos = Vector2.ZERO
 			
@@ -104,10 +103,8 @@ func check_for_player():
 	else:
 		return player_pos
 
-
 func check_lights():
 	return MainInstances.CurrentRoom.lights_on or MainInstances.Player.flashlight.flashlight_on
-
 
 func shoot_at_player():
 	animationPlayer.stop()
@@ -119,6 +116,10 @@ func shoot_at_player():
 	var collider = fire.get_collider()
 	
 	if collider == MainInstances.Player.hurtbox or collider == null:
+		if MainInstances.Player.is_hurt:
+			MainInstances.Player.die()
+		else:
+			MainInstances.Player.is_hurt = true
 		return
 
 	var hit_area = fire.get_collision_point()
@@ -140,7 +141,6 @@ func shoot_at_player():
 func get_direction_vector(obj_direction):
 	return Vector2(cos(obj_direction), sin(obj_direction)).normalized()
 
-
 func rotate_towards_absolute(relative_point: Vector2, speed_modifier: int, entity: Node2D = self):
 	# Get the target direction as a vector point
 	var target_vector = relative_point.normalized()
@@ -150,7 +150,7 @@ func rotate_towards_absolute(relative_point: Vector2, speed_modifier: int, entit
 	# If ~approximately~ the direction vector is the inverse of the target vector
 	# then displace it slightly so that it rotates correctly
 	if Vector2(round(target_vector[0]*100)/100, round(target_vector[1]*100)/100) \
-	== -Vector2(round(direction_vector[0]*100)/100, round(direction_vector[1]*100)/100) :
+	== -Vector2(round(direction_vector[0]*100)/100, round(direction_vector[1]*100)/100):
 		var displace = Vector2(direction_vector[1], -direction_vector[0])
 		direction_vector += displace / 10
 		direction_vector = direction_vector.normalized()
@@ -169,14 +169,11 @@ func rotate_towards_absolute(relative_point: Vector2, speed_modifier: int, entit
 	entity.look_at(direction_vector + entity.global_position)
 	return entity.global_rotation
 
-
 func _on_ShootTimer_timeout():
 	shoot_at_player()
 
-
 func _on_WindUpTimer_timeout():
 	shooting = true
-
 
 func _on_AimingTimer_timeout():
 	winding_up = true

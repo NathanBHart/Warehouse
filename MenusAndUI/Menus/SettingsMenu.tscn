@@ -195,8 +195,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 5.0
 margin_top = 30.0
-margin_right = -265.0
-margin_bottom = -115.0
+margin_right = -5.0
+margin_bottom = -5.0
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Gameplay"]
 margin_right = 300.0

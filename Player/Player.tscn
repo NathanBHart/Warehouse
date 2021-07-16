@@ -241,6 +241,5 @@ remote_path = NodePath("../../Camera")
 
 [connection signal="timeout" from="AnimationTimers/TurnTimer" to="." method="_on_TurnTimer_timeout"]
 [connection signal="timeout" from="AnimationTimers/JumpTimer" to="." method="_on_JumpTimer_timeout"]
-[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 
 [editable path="Hurtbox"]
