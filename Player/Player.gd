@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+const STAIRS_BITMASK = 4
+
 # Warning Ignores
 # warning-ignore:unused_signal
 
@@ -124,11 +126,14 @@ func save():
 	}
 	return save_dictionary
 
+
 func assign_camera():
 	cameraFollow.remote_path = MainInstances.MainCamera.get_path()
 
+
 func connect_hit_door():
 	MainInstances.Player.connect("hit_door", MainInstances.Main, "_on_Player_hit_door")
+
 
 func apply_gravity(delta):
 	if is_on_floor(): return
@@ -136,6 +141,7 @@ func apply_gravity(delta):
 	velocity.y = min(velocity.y, JUMP_FORCE)
 	if velocity.y > 0:
 		is_jumping = false
+
 
 func apply_friction(input_vector):
 	if input_vector.x != 0: 
@@ -147,6 +153,7 @@ func apply_friction(input_vector):
 		idle = true
 	else:
 		velocity.x = lerp(velocity.x, 0, AIR_RESISTANCE)
+
 
 func apply_horizontal_force(input_vector, delta):
 	if just_boosted:
@@ -163,24 +170,33 @@ func apply_horizontal_force(input_vector, delta):
 	
 	if is_on_floor():
 		velocity.x = clamp(velocity.x, -MAX_SPEED, MAX_SPEED)
+		
+		#Check for drop platforms
+		if Input.is_action_pressed("down"):
+			set_collision_mask_bit(STAIRS_BITMASK, false)
+		
 	else:
 		velocity.x = clamp(velocity.x, -AIR_MAX_SPEED, AIR_MAX_SPEED)
+
 
 func get_input_vector():
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength("walk_right") - Input.get_action_strength("walk_left")
 	return input_vector
 
+
 func get_wall_axis():
 	var is_wall_right = test_move(transform, Vector2.RIGHT)
 	var is_wall_left = test_move(transform, Vector2.LEFT)
 	return int(is_wall_right) - int(is_wall_left)
+
 
 func jump(force = JUMP_FORCE):
 	just_jumped = true
 	is_jumping = true
 	velocity.y = -force
 	snap_vector = Vector2.ZERO
+
 
 func jump_check():
 	if is_on_floor():
@@ -210,9 +226,11 @@ func jump_check():
 			
 	landingJumpTimer.start()
 
+
 func update_snap_vector():
 	if is_on_floor():
 		snap_vector = Vector2.DOWN
+
 
 func wall_check():
 	if is_on_floor() and clingArea.monitoring == false:
@@ -222,6 +240,7 @@ func wall_check():
 		state = WALL_STATE
 		wallClingTimer.start()
 		wallClingTimer.set_paused(true)
+
 
 func wall_cling_check(wall_axis):
 	
@@ -237,7 +256,7 @@ func wall_cling_check(wall_axis):
 		boost_off_wall(wall_axis)
 		state = MOVE_STATE
 		
-	if Input.is_action_pressed("slide_faster"):
+	if Input.is_action_pressed("down"):
 		slide_down_wall()
 		return
 	
@@ -257,21 +276,25 @@ func wall_cling_check(wall_axis):
 				wallClingTimer.set_paused(true)
 				slide_down_wall()
 
+
 func reset_wall_cling_timer():
 	wallClingTimer.stop()
 	wallClingTimer.wait_time = 3
 
+
 func slide_down_wall():
-	if Input.is_action_pressed("slide_faster"):
+	if Input.is_action_pressed("down"):
 		velocity.y = ACCELERATED_WALL_SLIDE_SPEED
 	else:
 		velocity.y = WALL_SLIDE_SPEED
+
 
 func boost_off_wall(wall_axis):
 	just_boosted = true
 	MAX_SPEED = WALL_BOOST_SPEED
 	velocity.x = MAX_SPEED * -wall_axis
 	jump(JUMP_FORCE/3)
+
 
 func wall_detach_check(wall_axis, delta):
 	if Input.is_action_just_pressed("jump"):
@@ -289,6 +312,7 @@ func wall_detach_check(wall_axis, delta):
 				velocity.x = ACCELERATION * delta
 				state = MOVE_STATE
 				clingArea.monitoring = false
+
 
 func move():
 	var was_on_floor = is_on_floor()
@@ -389,6 +413,7 @@ func update_animations(input_vector):
 			else:
 				sprite.frame = 18
 
+
 func jump_animating():
 	
 	var current_anim = animationPlayer.current_animation
@@ -413,5 +438,11 @@ func _on_JumpTimer_timeout():
 	state = MOVE_STATE
 	move()
 
+
 func _on_Hurtbox_area_entered(_area):
 	queue_free()
+
+
+func _on_PlatformChecker_body_exited(body):
+	
+	set_collision_mask_bit(STAIRS_BITMASK, true)
