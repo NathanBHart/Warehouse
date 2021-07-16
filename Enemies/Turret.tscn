@@ -124,42 +124,6 @@ tracks/8/keys = {
 "update": 1,
 "values": [ 1.0, 0.3, 0.0 ]
 }
-tracks/9/type = "value"
-tracks/9/path = NodePath("Head/Glow:energy")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 3.0 ]
-}
-tracks/10/type = "value"
-tracks/10/path = NodePath("Head/Glow/Spotlight:energy")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 2.0 ]
-}
-tracks/11/type = "value"
-tracks/11/path = NodePath("Head/Glow:visible")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
 
 [sub_resource type="Animation" id=3]
 resource_name = "idle"
@@ -224,30 +188,6 @@ tracks/4/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ false ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Head/Glow:energy")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 1 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("Head/Glow/Spotlight:energy")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 1 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -411,42 +351,6 @@ tracks/5/keys = {
 "update": 1,
 "values": [ false ]
 }
-tracks/6/type = "value"
-tracks/6/path = NodePath("Head/Glow:visible")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/7/type = "value"
-tracks/7/path = NodePath("Head/Glow:energy")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 3.0 ]
-}
-tracks/8/type = "value"
-tracks/8/path = NodePath("Head/Glow/Spotlight:energy")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 2.0 ]
-}
 
 [node name="Turret" instance=ExtResource( 1 )]
 collision_layer = 0
@@ -487,7 +391,7 @@ offset = Vector2( 5, 0 )
 texture = ExtResource( 3 )
 offset = Vector2( 5, 0 )
 hframes = 9
-frame = 1
+frame = 3
 
 [node name="FrontLight" type="Light2D" parent="Head" index="0"]
 position = Vector2( 4.53516, 0.559541 )
@@ -498,7 +402,6 @@ color = Color( 1, 0, 0, 1 )
 [node name="BackLight" type="Light2D" parent="Head" index="1"]
 position = Vector2( -0.515315, -3.48733 )
 scale = Vector2( 0.0113154, 0.0113154 )
-enabled = false
 texture = ExtResource( 5 )
 color = Color( 1, 0, 0, 1 )
 energy = 1.5
@@ -511,7 +414,6 @@ texture = ExtResource( 6 )
 color = Color( 1, 0, 0, 1 )
 
 [node name="Glow" type="Light2D" parent="Head" index="3"]
-visible = false
 modulate = Color( 1, 1, 1, 0 )
 position = Vector2( -1.56589, 0.176466 )
 scale = Vector2( 0.0100505, 0.0100505 )
@@ -528,7 +430,6 @@ shadow_filter = 5
 shadow_filter_smooth = 7.0
 
 [node name="GunFire" type="Sprite" parent="Head" index="4"]
-visible = false
 position = Vector2( 17.7898, 0 )
 texture = ExtResource( 7 )
 hframes = 3

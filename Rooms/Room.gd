@@ -2,6 +2,7 @@ extends Node2D
 
 export (Color) var BASE_COLOR = Color.white
 export (bool) var lights_on = true
+export (Color) var LIGHTS_ON_COLOR = Color.white
 
 const MAIN = preload("res://World/Main.gd")
 
@@ -17,7 +18,10 @@ func _ready():
 	if parent is MAIN:
 		parent.currentRoom = self
 		
-	call_deferred("set_modulate", BASE_COLOR)
+	if lights_on:
+		call_deferred("set_modulate", LIGHTS_ON_COLOR)
+	else:
+		call_deferred("set_modulate", BASE_COLOR)
 	
 	lights.visible = lights_on
 	
@@ -46,4 +50,9 @@ func set_modulate(color):
 func flip_lights():
 	lights_on = !lights_on
 	lights.visible = lights_on
+	
+	if lights_on:
+		call_deferred("set_modulate", LIGHTS_ON_COLOR)
+	else:
+		call_deferred("set_modulate", BASE_COLOR)
 	
