@@ -6,7 +6,7 @@
 [ext_resource path="res://Graphics/Player/Flashlight-Beam.png" type="Texture" id=4]
 [ext_resource path="res://Enemies/Turret.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Graphics/Enemies/light.png" type="Texture" id=6]
-[ext_resource path="res://World/RigidBodies/PhysicsObjects.tscn" type="PackedScene" id=7]
+[ext_resource path="res://World/LightSwitch.tscn" type="PackedScene" id=7]
 
 [node name="Room1" instance=ExtResource( 1 )]
 position = Vector2( 0, 0.280609 )
@@ -65,7 +65,7 @@ rotation = 1.57079
 [node name="Turret3" parent="." index="6" instance=ExtResource( 5 )]
 position = Vector2( -221.15, 85.5702 )
 
-[node name="PhysicsObjects" parent="." index="7" instance=ExtResource( 7 )]
-position = Vector2( -67.8823, 77.7818 )
+[node name="LightSwitch" parent="." index="7" instance=ExtResource( 7 )]
+position = Vector2( -8, 79.7194 )
 
 [editable path="MainTileMap"]
