@@ -1,4 +1,4 @@
-[gd_scene load_steps=114 format=2]
+[gd_scene load_steps=115 format=2]
 
 [ext_resource path="res://Graphics/Tilesets/tileset_Tilemap-Main-v2.png" type="Texture" id=1]
 [ext_resource path="res://Graphics/Tilesets/Wall-Tile-Sheet.png" type="Texture" id=2]
@@ -712,12 +712,15 @@ points = PoolVector2Array( 0, 16, 16, 32, 0, 32 )
 [sub_resource type="ConvexPolygonShape2D" id=106]
 points = PoolVector2Array( 0, 32, 16, 32, 16, 40, 0, 40 )
 
+[sub_resource type="ConvexPolygonShape2D" id=108]
+points = PoolVector2Array( 0, 32, 12, 32, 12, 16, 16, 16, 16, 40, 0, 40 )
+
 [sub_resource type="TileSet" id=107]
 0/name = "Stairs.png 0"
 0/texture = ExtResource( 6 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
-0/region = Rect2( 0, 0, 192, 48 )
+0/region = Rect2( 0, 0, 256, 48 )
 0/tile_mode = 2
 0/autotile/icon_coordinate = Vector2( 0, 0 )
 0/autotile/tile_size = Vector2( 16, 48 )
@@ -725,7 +728,7 @@ points = PoolVector2Array( 0, 32, 16, 32, 16, 40, 0, 40 )
 0/autotile/occluder_map = [  ]
 0/autotile/navpoly_map = [  ]
 0/autotile/priority_map = [  ]
-0/autotile/z_index_map = [ Vector3( 10, 0, -1 ), Vector3( 11, 0, -1 ) ]
+0/autotile/z_index_map = [ Vector3( 8, 0, -1 ), Vector3( 9, 0, -1 ), Vector3( 10, 0, -2 ), Vector3( 11, 0, -2 ), Vector3( 12, 0, -1 ), Vector3( 13, 0, -1 ), Vector3( 14, 0, -1 ), Vector3( 15, 0, -1 ) ]
 0/occluder_offset = Vector2( 0, 0 )
 0/navigation_offset = Vector2( 0, 0 )
 0/shape_offset = Vector2( 0, 0 )
@@ -787,6 +790,12 @@ points = PoolVector2Array( 0, 32, 16, 32, 16, 40, 0, 40 )
 "one_way_margin": 1.0,
 "shape": SubResource( 106 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 12, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 108 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 0/z_index = 0
 
@@ -803,12 +812,15 @@ cell_size = Vector2( 32, 32 )
 format = 1
 
 [node name="WallDecorations" type="TileMap" parent="."]
+position = Vector2( 4, 4 )
 z_index = -4
 tile_set = SubResource( 97 )
 cell_size = Vector2( 8, 8 )
+centered_textures = true
 format = 1
 
 [node name="Stairs" type="TileMap" parent="."]
+z_index = -1
 tile_set = SubResource( 107 )
 cell_size = Vector2( 16, 16 )
 collision_layer = 16
