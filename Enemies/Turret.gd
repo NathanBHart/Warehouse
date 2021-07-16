@@ -79,16 +79,20 @@ func _physics_process(_delta):
 						shootTimer.start()
 						fire.cast_to = direction * RANGE
 						
-						glow.energy = lerp(glow.energy, 3, LIGHT_UP_LERP)
-						spotlight.energy = lerp(spotlight.energy, 2, LIGHT_UP_LERP)
+					if not MainInstances.CurrentRoom.lights_on:
+						spotlight_power_up()
+					else:
+						spotlight_power_down()
 				
 				elif winding_up:
 					if windUpTimer.is_stopped():
 						windUpTimer.start()
 					animationPlayer.play("winding-up")
 					
-					glow.energy = lerp(glow.energy, 3, LIGHT_UP_LERP)
-					spotlight.energy = lerp(spotlight.energy, 2, LIGHT_UP_LERP)
+					if not MainInstances.CurrentRoom.lights_on:
+						spotlight_power_up()
+					else:
+						spotlight_power_down()
 					
 				else:
 					if aimingTimer.is_stopped():
@@ -106,6 +110,15 @@ func go_idle():
 	
 	rotate_towards_absolute(get_direction_vector(global_rotation), 15, head)
 	
+	spotlight_power_down()
+
+
+func spotlight_power_up():
+	glow.energy = lerp(glow.energy, 3, LIGHT_UP_LERP)
+	spotlight.energy = lerp(spotlight.energy, 2, LIGHT_UP_LERP)
+	
+	
+func spotlight_power_down():
 	glow.energy = lerp(glow.energy, 0, LIGHT_UP_LERP)
 	spotlight.energy = lerp(spotlight.energy, 0, LIGHT_UP_LERP)
 
