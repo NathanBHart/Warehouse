@@ -23,5 +23,6 @@ func _on_SettingsButton_pressed():
 		settings.visible = true
 
 func _on_QuitToStartButton_pressed():
+	self.is_paused = false
 # warning-ignore:return_value_discarded
 	get_tree().change_scene("res://MenusAndUI/Menus/StartMenu.tscn")

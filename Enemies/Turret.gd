@@ -25,8 +25,8 @@ onready var head = $Head
 onready var glow = $Head/Glow
 onready var spotlight = $Head/Glow/Spotlight
 
-const bulletSpray = preload("res://Graphics/Effects/BulletHitSpray.tscn")
-const bulletImpact = preload("res://Graphics/Effects/BulletImpact.tscn")
+const BulletSpray = preload("res://Graphics/Effects/BulletHitSpray.tscn")
+const BulletImpact = preload("res://Graphics/Effects/BulletImpact.tscn")
 
 enum {
 	IDLE,
@@ -122,7 +122,6 @@ func spotlight_power_down():
 	glow.energy = lerp(glow.energy, 0, LIGHT_UP_LERP)
 	spotlight.energy = lerp(spotlight.energy, 0, LIGHT_UP_LERP)
 
-
 func check_for_player():
 	var player_pos = Vector2.ZERO
 			
@@ -138,14 +137,12 @@ func check_for_player():
 	else:
 		return player_pos
 
-
 func check_lights():
 	
 	if TARGETING_MODE == ALWAYS:
 		return true
 	else:
 		return MainInstances.CurrentRoom.lights_on or MainInstances.Player.flashlight.flashlight_on
-
 
 func shoot_at_player():
 	animationPlayer.stop()
@@ -157,29 +154,26 @@ func shoot_at_player():
 	var collider = fire.get_collider()
 	
 	if collider == MainInstances.Player.hurtbox or collider == null:
+		if MainInstances.Player.is_hurt:
+			MainInstances.Player.die()
+		else:
+			MainInstances.Player.is_hurt = true
 		return
 
 	var hit_area = fire.get_collision_point()
 	var normal = fire.get_collision_normal()
 	
-	var spray_effect = bulletSpray.instance()
-	spray_effect.global_position = hit_area
-	spray_effect.direction = normal
+	var bulletSpray = Utils.instance_scene_on_main(BulletSpray, hit_area)
+	bulletSpray.direction = normal
 	
-	var impact_effect = bulletImpact.instance()
-	impact_effect.global_position = hit_area
+	var bulletImpact = Utils.instance_scene_on_main(BulletImpact, hit_area)
 	
-	get_tree().current_scene.add_child(spray_effect)
-	
-	if not collider is RigidBody2D:
-		get_tree().current_scene.add_child(impact_effect)
-		impact_effect.look_at(hit_area + normal)
+	bulletImpact.look_at(hit_area + normal)
 
 # I borrowed these two functions from another project I did because it's really
 # tedious to recode.
 func get_direction_vector(obj_direction):
 	return Vector2(cos(obj_direction), sin(obj_direction)).normalized()
-
 
 func rotate_towards_absolute(relative_point: Vector2, speed_modifier: int, entity: Node2D = self):
 	# Get the target direction as a vector point
@@ -190,7 +184,7 @@ func rotate_towards_absolute(relative_point: Vector2, speed_modifier: int, entit
 	# If ~approximately~ the direction vector is the inverse of the target vector
 	# then displace it slightly so that it rotates correctly
 	if Vector2(round(target_vector[0]*100)/100, round(target_vector[1]*100)/100) \
-	== -Vector2(round(direction_vector[0]*100)/100, round(direction_vector[1]*100)/100) :
+	== -Vector2(round(direction_vector[0]*100)/100, round(direction_vector[1]*100)/100):
 		var displace = Vector2(direction_vector[1], -direction_vector[0])
 		direction_vector += displace / 10
 		direction_vector = direction_vector.normalized()
@@ -209,14 +203,11 @@ func rotate_towards_absolute(relative_point: Vector2, speed_modifier: int, entit
 	entity.look_at(direction_vector + entity.global_position)
 	return entity.global_rotation
 
-
 func _on_ShootTimer_timeout():
 	shoot_at_player()
 
-
 func _on_WindUpTimer_timeout():
 	shooting = true
-
 
 func _on_AimingTimer_timeout():
 	winding_up = true

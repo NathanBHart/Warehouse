@@ -18,7 +18,7 @@ export var AIR_MAX_SPEED = 120
 export var WALL_SLIDE_SPEED = 30
 export var ACCELERATED_WALL_SLIDE_SPEED = 60
 export var WALL_BOOST_SPEED = 140
-export var INERTIA = 25 # Added force of Inertia
+export var INERTIA = 25
 
 # Vectors
 var velocity = Vector2.ZERO
@@ -29,6 +29,7 @@ var just_jumped = false
 var is_jumping = false
 var just_boosted = false
 var idle = false
+var is_hurt = false
 
 # Platforming Controllers
 onready var coyoteTimer = $CoyoteTimer
@@ -44,17 +45,20 @@ onready var turnTimer = $AnimationTimers/TurnTimer
 onready var jumpTimer = $AnimationTimers/JumpTimer
 onready var flashlight = $Sprite/Flashlight
 
-#Hitbox
+# Collisions
 onready var hurtbox = $Hurtbox
 
 var turning = false
 var turn_to = 1
 var holding = true
 
+# Preload Resources
 var MainInstances = ResourceLoader.MainInstances
 
-# Other Variables Created Onready
+# Export Constant Backups
+onready var jump_force_backup = JUMP_FORCE
 onready var max_speed_backup = MAX_SPEED
+onready var air_max_speed_backup = AIR_MAX_SPEED
 
 # States
 enum {
@@ -86,6 +90,19 @@ func _physics_process(delta):
 		
 		MOVE_STATE:
 			var input_vector = get_input_vector()
+			
+			if is_hurt:
+				JUMP_FORCE = jump_force_backup * 0.85
+				MAX_SPEED = max_speed_backup * 0.75
+				AIR_MAX_SPEED = air_max_speed_backup * 0.75
+			else:
+				JUMP_FORCE = jump_force_backup
+				
+				if not just_boosted:
+					MAX_SPEED = max_speed_backup
+				
+				AIR_MAX_SPEED = air_max_speed_backup
+				
 			reset_wall_cling_timer()
 			apply_horizontal_force(input_vector, delta)
 			apply_friction(input_vector)
@@ -93,7 +110,10 @@ func _physics_process(delta):
 			jump_check()
 			apply_gravity(delta)
 			move()
-			wall_check()
+			
+			if not is_hurt:
+				wall_check()
+				
 			update_animations(input_vector)
 			
 		WALL_STATE:
@@ -110,6 +130,7 @@ func _physics_process(delta):
 				sprite.scale.x = 1
 			else:
 				sprite.scale.x = -wall_axis
+				
 			wall_cling_check(wall_axis)
 			move()
 			wall_detach_check(wall_axis, delta)
@@ -207,8 +228,8 @@ func jump_check():
 			
 		if landingJumpTimer.is_stopped(): return
 		
-		if Input.is_action_pressed("jump"): jump(JUMP_FORCE)
-		else: jump(JUMP_FORCE/2)
+		if Input.is_action_pressed("jump"): state = JUMPING
+		else: state = JUMPING
 		
 		just_jumped = true
 		
@@ -424,12 +445,10 @@ func jump_animating():
 		else:
 			animationPlayer.play("jump")
 		jumpTimer.start()
-	
 
 func _on_TurnTimer_timeout():
 	sprite.scale.x = turn_to
 	turning = false
-
 
 func _on_JumpTimer_timeout():
 	jump(JUMP_FORCE)
@@ -439,7 +458,7 @@ func _on_JumpTimer_timeout():
 	move()
 
 
-func _on_Hurtbox_area_entered(_area):
+func die():
 	queue_free()
 
 

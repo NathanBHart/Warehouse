@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "MainInstances",
 "language": "GDScript",
 "path": "res://Singletons/ResourcesToLoad/MainInstances.gd"
+}, {
+"base": "Resource",
+"class": "Settings",
+"language": "GDScript",
+"path": "res://Singletons/ResourcesToLoad/Settings.gd"
 } ]
 _global_script_class_icons={
-"MainInstances": ""
+"MainInstances": "",
+"Settings": ""
 }
 
 [application]
@@ -27,8 +33,8 @@ config/icon="res://icon.png"
 [autoload]
 
 SaverAndLoader="*res://Singletons/SaverAndLoader.gd"
-Settings="*res://Singletons/Settings.gd"
 ResourceLoader="*res://Singletons/ResourceLoader.gd"
+Utils="*res://Singletons/Utils.gd"
 
 [display]
 
@@ -37,6 +43,7 @@ window/size/height=180
 window/size/test_width=1280
 window/size/test_height=720
 window/stretch/mode="2d"
+window/stretch/aspect="keep"
 
 [importer_defaults]
 
@@ -99,6 +106,11 @@ pause={
 interact={
 "deadzone": 0.5,
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+fullscreen={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777254,"unicode":0,"echo":false,"script":null)
  ]
 }
 

@@ -4,7 +4,10 @@ export var IN_MAIN = false
 
 var pauseMenu = null
 
+var Settings = ResourceLoader.Settings
+
 onready var colorRect = $ColorRect
+onready var checkBox = $MarginContainer/TabContainer/Video/MarginContainer2/HBoxContainer/VBoxContainer/CheckBox
 
 # Sliders
 onready var brightnessSlider = $MarginContainer/TabContainer/Video/MarginContainer2/HBoxContainer/VBoxContainer/BrightnessSlider
@@ -13,6 +16,7 @@ onready var musicSlider = $MarginContainer/TabContainer/Audio/MarginContainer/HB
 onready var difficultySlider = $MarginContainer/TabContainer/Gameplay/MarginContainer/HBoxContainer/VBoxContainer/DifficultySlider
 
 func _ready():
+	Utils.fullscreen_just_pressed = false
 	if IN_MAIN:
 		colorRect.color = Color(0, 0, 0, 0.403922)
 	call_deferred("set_settings")
@@ -23,6 +27,15 @@ func _process(_delta):
 	Settings.music = musicSlider.value
 	Settings.difficulty = difficultySlider.value
 	
+	if Utils.fullscreen_just_pressed:
+		checkBox.pressed = !checkBox.pressed
+		Utils.fullscreen_just_pressed = false
+	
+	if checkBox.pressed:
+		OS.window_fullscreen = true
+	else:
+		OS.window_fullscreen = false
+	
 	if pauseMenu == null:
 		return
 	
@@ -30,6 +43,7 @@ func _process(_delta):
 		visible = false
 
 func set_settings():
+	checkBox.pressed = OS.window_fullscreen
 	brightnessSlider.value = Settings.brightness
 	soundEffectsSlider.value = Settings.sound_effects
 	musicSlider.value = Settings.music
