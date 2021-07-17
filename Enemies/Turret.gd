@@ -25,6 +25,11 @@ onready var head = $Head
 onready var glow = $Head/Glow
 onready var spotlight = $Head/Glow/Spotlight
 
+onready var range_backup = RANGE
+onready var speed_backup = SPEED
+onready var accuracy_backup = ACCURACY
+onready var wait_delay_backup = WAIT_DELAY
+
 const BulletSpray = preload("res://Graphics/Effects/BulletHitSpray.tscn")
 const BulletImpact = preload("res://Graphics/Effects/BulletImpact.tscn")
 
@@ -34,6 +39,7 @@ enum {
 }
 
 var MainInstances = ResourceLoader.MainInstances
+var Settings = ResourceLoader.Settings
 
 var state = ACTIVE
 var shooting = false
@@ -49,6 +55,23 @@ func _ready():
 	glow.visible = true
 
 func _physics_process(_delta):
+	match Settings.difficulty:
+		1:
+			RANGE = range_backup * 0.75
+			SPEED = speed_backup * 0.75
+			ACCURACY = accuracy_backup * 1.25
+			WAIT_DELAY = wait_delay_backup * 0.75
+		2:
+			RANGE = range_backup
+			SPEED = speed_backup
+			ACCURACY = accuracy_backup
+			WAIT_DELAY = wait_delay_backup
+		3:
+			RANGE = range_backup * 1.25
+			SPEED = speed_backup * 1.25
+			ACCURACY = accuracy_backup * 0.75
+			WAIT_DELAY = wait_delay_backup * 1.25
+	
 	match state:
 		IDLE:
 			go_idle()
@@ -154,7 +177,7 @@ func shoot_at_player():
 	var collider = fire.get_collider()
 	
 	if collider == MainInstances.Player.hurtbox or collider == null:
-		if MainInstances.Player.is_hurt:
+		if MainInstances.Player.is_hurt or Settings.difficulty == 3:
 			MainInstances.Player.die()
 		else:
 			MainInstances.Player.is_hurt = true

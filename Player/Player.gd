@@ -55,6 +55,7 @@ var holding = true
 
 # Preload Resources
 var MainInstances = ResourceLoader.MainInstances
+var Settings = ResourceLoader.Settings
 
 # Export Constant Backups
 onready var jump_force_backup = JUMP_FORCE
@@ -93,7 +94,7 @@ func _physics_process(delta):
 		MOVE_STATE:
 			var input_vector = get_input_vector()
 			
-			if is_hurt:
+			if is_hurt and Settings.difficulty == 2:
 				JUMP_FORCE = jump_force_backup * 0.85
 				MAX_SPEED = max_speed_backup * 0.75
 				AIR_MAX_SPEED = air_max_speed_backup * 0.75
@@ -113,7 +114,7 @@ func _physics_process(delta):
 			apply_gravity(delta)
 			move()
 			
-			if not is_hurt:
+			if not is_hurt or Settings.difficulty == 1:
 				wall_check()
 				
 			update_animations(input_vector)
