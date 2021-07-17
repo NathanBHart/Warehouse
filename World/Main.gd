@@ -9,6 +9,7 @@ var player_just_died = false
 
 onready var currentRoom = $Room1
 onready var canvasModulate = $CanvasModulate
+onready var brightnessController = $CanvasLayer/Sprite
 
 func _ready():
 	VisualServer.set_default_clear_color(Color.black)
@@ -19,13 +20,7 @@ func _ready():
 	MainInstances.Main = self
 
 func _process(_delta):
-	set_brightness()
-
-func set_brightness():
-	var brightness = Settings.brightness/100
-	if MainInstances.Player != null:
-		MainInstances.Player.modulate = Color(1, 1, 1, brightness)
-	currentRoom.modulate = Color(1, 1, 1, brightness)
+	brightnessController.modulate.a = 1 - Settings.brightness/100
 
 func change_rooms(door):
 	var offset = currentRoom.position

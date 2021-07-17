@@ -2,6 +2,8 @@ extends Node
 
 var fullscreen_just_pressed = false
 
+var Settings = ResourceLoader.Settings
+
 func _input(_event):
 	if Input.is_action_just_pressed("fullscreen"):
 		OS.window_fullscreen = !OS.window_fullscreen

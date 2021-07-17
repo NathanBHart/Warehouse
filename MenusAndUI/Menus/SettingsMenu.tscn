@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://MenusAndUI/MainTheme.tres" type="Theme" id=1]
 [ext_resource path="res://MenusAndUI/Menus/SettingsMenu.gd" type="Script" id=2]
 [ext_resource path="res://MenusAndUI/Fonts/slkscr-7.tres" type="DynamicFont" id=3]
+[ext_resource path="res://MenusAndUI/Styleboxes/SolidBlack.png" type="Texture" id=4]
 
 [node name="SettingsMenu" type="Control"]
 pause_mode = 2
@@ -87,7 +88,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="MarginContainer/TabContainer/Video/MarginContainer2/HBoxContainer/VBoxContainer"]
 margin_right = 193.0
 margin_bottom = 23.0
-text = "Game Brightness: "
+text = "Brightness: "
 
 [node name="BrightnessSlider" type="HSlider" parent="MarginContainer/TabContainer/Video/MarginContainer2/HBoxContainer/VBoxContainer"]
 margin_top = 27.0
@@ -284,6 +285,12 @@ margin_top = 90.0
 margin_right = 83.0
 margin_bottom = 115.0
 text = "Back"
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 160, 88 )
+scale = Vector2( 608, 456 )
+texture = ExtResource( 4 )
 
 [connection signal="pressed" from="MarginContainer/TabContainer/Video/MarginContainer2/HBoxContainer/Control/VBoxContainer/BackButton1" to="." method="_on_BackButton1_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Audio/MarginContainer/HBoxContainer/Control/VBoxContainer/BackButton2" to="." method="_on_BackButton2_pressed"]

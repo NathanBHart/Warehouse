@@ -465,6 +465,5 @@ func die():
 	queue_free()
 
 
-func _on_PlatformChecker_body_exited(body):
-	
+func _on_PlatformChecker_body_exited(_body):
 	set_collision_mask_bit(STAIRS_BITMASK, true)

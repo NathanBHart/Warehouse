@@ -13,6 +13,7 @@ var pauseMenu = null
 var Settings = ResourceLoader.Settings
 
 onready var colorRect = $ColorRect
+onready var brightnessController = $Sprite
 
 # Check Boxes
 onready var fullscreenCheckBox = $MarginContainer/TabContainer/Video/MarginContainer2/HBoxContainer/VBoxContainer/FullscreenCheckBox
@@ -30,6 +31,8 @@ onready var brightnessLabel = $MarginContainer/TabContainer/Video/MarginContaine
 onready var soundEffectsLabel = $MarginContainer/TabContainer/Audio/MarginContainer/HBoxContainer/VBoxContainer/Label
 onready var musicLabel = $MarginContainer/TabContainer/Audio/MarginContainer/HBoxContainer/VBoxContainer/Label2
 
+# warning-ignore-all:return_value_discarded
+
 func _ready():
 	Utils.fullscreen_just_pressed = false
 	if IN_MAIN:
@@ -40,6 +43,15 @@ func _process(_delta):
 	set_Settings_values()
 	set_label_text()
 	
+	if pauseMenu == null and IN_MAIN: return
+	
+	if Input.is_action_just_pressed("pause"):
+		go_back()
+	
+	if IN_MAIN: return
+	
+	brightnessController.modulate.a = 1 - Settings.brightness/100
+	
 	if Utils.fullscreen_just_pressed:
 		fullscreenCheckBox.pressed = !fullscreenCheckBox.pressed
 		Utils.fullscreen_just_pressed = false
@@ -48,12 +60,6 @@ func _process(_delta):
 		OS.window_fullscreen = true
 	else:
 		OS.window_fullscreen = false
-	
-	if pauseMenu == null:
-		return
-	
-	if pauseMenu.is_paused == false:
-		visible = false
 
 func set_settings():
 	fullscreenCheckBox.pressed = OS.window_fullscreen
@@ -72,7 +78,7 @@ func set_Settings_values():
 
 func set_label_text():
 	difficultyLabel.text = "Difficulty: " + difficulties[int(difficultySlider.value)]
-	brightnessLabel.text = "Game Brightness: " + str(brightnessSlider.value)
+	brightnessLabel.text = "Brightness: " + str(brightnessSlider.value)
 	soundEffectsLabel.text = "Sound Effects: " + str(soundEffectsSlider.value)
 	musicLabel.text = "Music: " + str(musicSlider.value)
 
@@ -83,7 +89,6 @@ func go_back():
 		return
 		
 	yield(get_tree().create_timer(0.1), "timeout")
-# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://MenusAndUI/Menus/StartMenu.tscn")
 
 func _on_BackButton1_pressed():
