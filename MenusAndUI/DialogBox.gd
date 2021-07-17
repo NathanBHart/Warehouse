@@ -1,9 +1,9 @@
 extends NinePatchRect
 
 onready var textureRect = $MarginContainer/HBoxContainer/TextureRect
-onready var richTextLabel = $MarginContainer/HBoxContainer/RichTextLabel
+onready var richTextLabel = $MarginContainer/HBoxContainer/VBoxContainer/RichTextLabel
 onready var marginContainer = $MarginContainer/HBoxContainer
-onready var label = $MarginContainer/HBoxContainer/Label
+onready var label = $MarginContainer/HBoxContainer/VBoxContainer/Label
 
 var current_page_index = null
 var pages = []
@@ -29,7 +29,11 @@ func _process(_delta):
 func create_dialog(text, texture_path = null):
 	pages = text.split("|")
 	if texture_path != null:
-		textureRect.texture = load(texture_path.get_path())
+		
+		var new_texture = load(texture_path.get_path())
+		textureRect.texture = new_texture
+		textureRect.rect_size = Vector2(40, 40)
+		
 	richTextLabel.text = pages[0]
 	current_page_index = 0
 	if len(pages) == 0:
