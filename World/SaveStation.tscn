@@ -2,7 +2,7 @@
 
 [ext_resource path="res://World/SaveStation.gd" type="Script" id=1]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 8 )
 
 [node name="SaveStation" type="Area2D"]
@@ -16,7 +16,7 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -8 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [connection signal="mouse_entered" from="." to="." method="_on_SaveStation_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_SaveStation_mouse_exited"]

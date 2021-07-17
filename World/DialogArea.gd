@@ -1,4 +1,7 @@
-extends Node2D
+extends Area2D
+
+export(String, MULTILINE) var TEXT = ""
+export(Texture) var IMAGE = null
 
 onready var playerDetector = $PlayerDetector
 
@@ -12,15 +15,15 @@ func _process(_delta):
 	
 	if playerDetector.is_colliding(): return
 	
+	if MainInstances.Main == null: return
+	
 	if not mouse_detected: return
 	
 	if Input.is_action_just_pressed("interact"):
-		SaverAndLoader.save_game()
-		if MainInstances.Player != null:
-			MainInstances.Player.is_hurt = false
+		MainInstances.Main.dialogBox.create_dialog(TEXT, IMAGE)
 
-func _on_SaveStation_mouse_entered():
+func _on_DialogArea_mouse_entered():
 	mouse_detected = true
 
-func _on_SaveStation_mouse_exited():
+func _on_DialogArea_mouse_exited():
 	mouse_detected = false

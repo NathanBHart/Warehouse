@@ -8,6 +8,7 @@ var Settings = ResourceLoader.Settings
 var player_just_died = false
 
 onready var currentRoom = $Room1
+onready var dialogBox = $CanvasLayer/DialogBox
 onready var canvasModulate = $CanvasModulate
 onready var brightnessController = $CanvasLayer/Sprite
 
