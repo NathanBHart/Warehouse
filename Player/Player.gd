@@ -86,7 +86,6 @@ func queue_free():
 	.queue_free()
 
 func _physics_process(delta):
-	print(holding)
 	match state:
 		MOVE_STATE:
 			var input_vector = get_input_vector()

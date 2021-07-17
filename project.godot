@@ -35,6 +35,7 @@ config/icon="res://icon.png"
 SaverAndLoader="*res://Singletons/SaverAndLoader.gd"
 ResourceLoader="*res://Singletons/ResourceLoader.gd"
 Utils="*res://Singletons/Utils.gd"
+Music="*res://Singletons/Music.tscn"
 
 [display]
 

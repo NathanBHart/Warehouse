@@ -6,6 +6,9 @@ var Settings = ResourceLoader.Settings
 
 # warning-ignore-all:return_value_discarded
 
+func _ready():
+	Music.list_play()
+
 func _process(_delta):
 	brightnessController.modulate.a = 1 - Settings.brightness/100
 
