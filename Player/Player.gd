@@ -51,7 +51,7 @@ onready var hurtbox = $Hurtbox
 
 var turning = false
 var turn_to = 1
-var holding = true
+var holding = 1
 
 # Preload Resources
 var MainInstances = ResourceLoader.MainInstances
@@ -86,11 +86,8 @@ func queue_free():
 	.queue_free()
 
 func _physics_process(delta):
-	
-	#holding = flashlight.flashlight_on
-	
+	print(holding)
 	match state:
-		
 		MOVE_STATE:
 			var input_vector = get_input_vector()
 			
@@ -116,7 +113,8 @@ func _physics_process(delta):
 			
 			if not is_hurt or Settings.difficulty == 1:
 				wall_check()
-				
+			
+			update_holding()
 			update_animations(input_vector)
 			
 		WALL_STATE:
@@ -137,9 +135,22 @@ func _physics_process(delta):
 			wall_cling_check(wall_axis)
 			move()
 			wall_detach_check(wall_axis, delta)
+			update_holding()
 			
 		JUMPING:
 			jump_animating()
+
+func _input(event):
+	if not event is InputEventMouseButton: return
+	
+	if not event.is_pressed(): return
+	
+	if event.button_index == BUTTON_WHEEL_UP:
+		holding += 1
+	elif event.button_index == BUTTON_WHEEL_DOWN:
+		holding -= 1
+	
+	holding = clamp(holding, 1, 3)
 
 func save():
 	var save_dictionary = {
@@ -383,7 +394,7 @@ func move():
 
 func update_animations(input_vector):
 	
-	if holding:
+	if holding == 2:
 		flashlight.show()
 	else:
 		flashlight.hide()
@@ -403,7 +414,7 @@ func update_animations(input_vector):
 			turning = false
 			
 		if not turning:
-			if holding:
+			if holding != 1:
 				animationPlayer.play("run-holding")
 			else:
 				animationPlayer.play("run")
@@ -416,7 +427,7 @@ func update_animations(input_vector):
 				sprite.frame = 12
 
 	else:
-		if holding:
+		if holding != 1:
 				animationPlayer.play("idle-holding")
 		else:
 			animationPlayer.play("idle")
@@ -427,12 +438,12 @@ func update_animations(input_vector):
 			animationPlayer.stop()
 		
 		if velocity.y > 0:
-			if holding:
+			if holding != 1:
 				sprite.frame = 37
 			else:
 				sprite.frame = 17
 		else:
-			if holding:
+			if holding != 1:
 				sprite.frame = 38
 			else:
 				sprite.frame = 18
@@ -443,11 +454,19 @@ func jump_animating():
 	var current_anim = animationPlayer.current_animation
 	
 	if not animationPlayer.is_playing() or not (current_anim == "jump" or current_anim == "jump-holding"):
-		if holding:
+		if holding != 1:
 			animationPlayer.play("jump-holding")
 		else:
 			animationPlayer.play("jump")
 		jumpTimer.start()
+
+func update_holding():
+	if Input.is_action_just_pressed("item_1"):
+		holding = 1
+	elif Input.is_action_just_pressed("item_2"):
+		holding = 2
+	elif Input.is_action_just_pressed("item_3"):
+		holding = 3
 
 func _on_TurnTimer_timeout():
 	sprite.scale.x = turn_to
