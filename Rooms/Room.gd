@@ -46,4 +46,3 @@ func set_modulate(color):
 func flip_lights():
 	lights_on = !lights_on
 	lights.visible = lights_on
-	

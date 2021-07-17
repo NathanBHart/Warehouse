@@ -1,7 +1,8 @@
 extends KinematicBody2D
 
 # Warning Ignores
-# warning-ignore:unused_signal
+# warning-ignore-all:unused_signal
+# warning-ignore-all:return_value_discarded
 
 # Export Constants
 export var MAX_SLOPE_ANGLE = 46
@@ -69,12 +70,13 @@ var state = MOVE_STATE
 
 # Signals
 signal hit_door(door)
+signal died
 
 func _ready():
 	MainInstances.Player = self
 	clingArea.monitoring = true
 	call_deferred("assign_camera")
-	call_deferred("connect_hit_door")
+	call_deferred("connect_signals")
 
 func queue_free():
 	MainInstances.Player = null
@@ -148,8 +150,9 @@ func save():
 func assign_camera():
 	cameraFollow.remote_path = MainInstances.MainCamera.get_path()
 
-func connect_hit_door():
-	MainInstances.Player.connect("hit_door", MainInstances.Main, "_on_Player_hit_door")
+func connect_signals():
+	connect("hit_door", MainInstances.Main, "_on_Player_hit_door")
+	connect("died", MainInstances.Main, "_on_Player_died")
 
 func apply_gravity(delta):
 	if is_on_floor(): return
@@ -433,4 +436,5 @@ func _on_JumpTimer_timeout():
 	move()
 
 func die():
+	emit_signal("died")
 	queue_free()

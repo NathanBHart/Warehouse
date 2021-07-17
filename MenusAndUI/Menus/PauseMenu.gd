@@ -3,7 +3,11 @@ extends Control
 var settings = null
 var is_paused = false setget set_is_paused
 
+var MainInstances = ResourceLoader.MainInstances
+
 func _input(_event):
+	if MainInstances.Main.player_just_died: return
+	
 	if Input.is_action_just_pressed("pause"):
 		self.is_paused = !is_paused
 
