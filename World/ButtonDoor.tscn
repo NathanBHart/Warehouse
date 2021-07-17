@@ -5,17 +5,16 @@
 [ext_resource path="res://Graphics/World/Door-In-Front.png" type="Texture" id=3]
 [ext_resource path="res://Graphics/World/Door-Behind.png" type="Texture" id=4]
 
-[sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 2, 13.1433 )
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 5.95156, 13.1433 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 2, 16 )
+extents = Vector2( 5.61786, 16 )
 
-[sub_resource type="OccluderPolygon2D" id=5]
+[sub_resource type="OccluderPolygon2D" id=3]
 polygon = PoolVector2Array( 0, -16, 4.99011, -16, 4.99011, 33.6653, 0, 33.5539 )
 
-[sub_resource type="Animation" id=3]
-resource_name = "close"
+[sub_resource type="Animation" id=4]
 length = 0.4
 step = 0.05
 tracks/0/type = "value"
@@ -55,8 +54,7 @@ tracks/2/keys = {
 "values": [ 1 ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "open"
+[sub_resource type="Animation" id=5]
 length = 0.4
 step = 0.05
 tracks/0/type = "value"
@@ -124,24 +122,24 @@ collision_layer = 0
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( 2, 0 )
-shape = SubResource( 6 )
+position = Vector2( 4.50283, 0 )
+shape = SubResource( 1 )
 
 [node name="Door" type="StaticBody2D" parent="."]
 collision_layer = 2
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door"]
-position = Vector2( 2, 0 )
+position = Vector2( 4.4194, 0 )
 shape = SubResource( 2 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-position = Vector2( 4.50989, -8.5749 )
-occluder = SubResource( 5 )
+position = Vector2( 3.0082, -8.5749 )
+occluder = SubResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/close = SubResource( 3 )
-anims/open = SubResource( 4 )
+anims/close = SubResource( 4 )
+anims/open = SubResource( 5 )
 
 [connection signal="button_pressed" from="Button" to="." method="_on_Button_button_pressed"]
 [connection signal="button_pressed" from="Button2" to="." method="_on_Button_button_pressed"]

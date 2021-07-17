@@ -1,0 +1,89 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://MenusAndUI/Fonts/slkscr-7.tres" type="DynamicFont" id=1]
+[ext_resource path="res://MenusAndUI/Styleboxes/Dialogue-Texture.png" type="Texture" id=2]
+[ext_resource path="res://MenusAndUI/DialogBox.gd" type="Script" id=3]
+[ext_resource path="res://MenusAndUI/Fonts/slkscr-10.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Default40x40.png" type="Texture" id=5]
+
+[node name="DialogBox" type="NinePatchRect"]
+self_modulate = Color( 1, 1, 1, 0.588235 )
+anchor_right = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = 68.0
+rect_min_size = Vector2( 0, 60 )
+texture = ExtResource( 2 )
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -8.0
+custom_constants/margin_right = 2
+custom_constants/margin_top = 2
+custom_constants/margin_left = 2
+custom_constants/margin_bottom = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 286.0
+margin_bottom = 42.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+texture = ExtResource( 5 )
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/HBoxContainer"]
+margin_left = 44.0
+margin_right = 48.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 4, 0 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+margin_left = 52.0
+margin_right = 284.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+margin_right = 232.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 8.0
+custom_fonts/normal_font = ExtResource( 4 )
+bbcode_text = "Hello, this is a dialog test. Hello, this is a dialog test. Hello, this is a dialog test. Hello, this is a dialog test. Hello, this is a dialog test."
+text = "Hello, this is a dialog test. Hello, this is a dialog test. Hello, this is a dialog test. Hello, this is a dialog test. Hello, this is a dialog test."
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+margin_top = 32.0
+margin_right = 232.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 2.0
+custom_fonts/font = ExtResource( 1 )
+text = "Press enter to continue"
+valign = 2
+autowrap = true

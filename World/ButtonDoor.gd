@@ -9,8 +9,6 @@ onready var area = $Area2D
 
 func _on_Button_button_pressed():
 	
-	print(area.get_overlapping_bodies().has(door))
-	
 	if animationPlayer.is_playing(): return
 	
 	var bodies = area.get_overlapping_bodies()
