@@ -1,26 +1,27 @@
 extends Node2D
 
+onready var door = $Door
 onready var doorCollision = $Door/CollisionShape2D
 onready var button = $Button
-onready var playerDetector = $Button/PlayerDetector
+onready var animationPlayer = $AnimationPlayer
+onready var lightOccluder = $LightOccluder2D
+onready var area = $Area2D
 
-var mouse_detected = false
-
-var MainInstances = ResourceLoader.MainInstances
-
-func _process(_delta):
-	if MainInstances.Player != null:
-		playerDetector.cast_to = MainInstances.Player.global_position - button.global_position
+func _on_Button_button_pressed():
 	
-	if playerDetector.is_colliding(): return
+	print(area.get_overlapping_bodies().has(door))
 	
-	if not mouse_detected: return
+	if animationPlayer.is_playing(): return
 	
-	if Input.is_action_just_pressed("interact"):
-		doorCollision.disabled = !doorCollision.disabled
-
-func _on_Button_mouse_entered():
-	mouse_detected = true
-
-func _on_Button_mouse_exited():
-	mouse_detected = false
+	var bodies = area.get_overlapping_bodies()
+	
+	if bodies.has(door):
+		if bodies.size() > 1:
+			return
+	elif bodies.size() > 0:
+		return
+	
+	if doorCollision.disabled:
+		animationPlayer.play("close")
+	else:
+		animationPlayer.play("open")

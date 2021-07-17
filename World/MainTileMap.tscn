@@ -715,19 +715,19 @@ points = PoolVector2Array( 0, 32, 16, 32, 16, 40, 0, 40 )
 [sub_resource type="ConvexPolygonShape2D" id=107]
 points = PoolVector2Array( 0, 32, 13, 32, 14, 16, 16, 16, 16, 40, 0, 40 )
 
-[sub_resource type="ConvexPolygonShape2D" id=109]
+[sub_resource type="ConvexPolygonShape2D" id=108]
 points = PoolVector2Array( 0, 48, 16, 32, 12, 44 )
+
+[sub_resource type="ConvexPolygonShape2D" id=109]
+points = PoolVector2Array( 0, 32, 16, 48, 4, 44 )
 
 [sub_resource type="ConvexPolygonShape2D" id=110]
-points = PoolVector2Array( 0, 32, 16, 48, 4, 44 )
-
-[sub_resource type="ConvexPolygonShape2D" id=111]
 points = PoolVector2Array( 0, 48, 16, 32, 12, 44 )
 
-[sub_resource type="ConvexPolygonShape2D" id=112]
+[sub_resource type="ConvexPolygonShape2D" id=111]
 points = PoolVector2Array( 0, 32, 16, 48, 4, 44 )
 
-[sub_resource type="TileSet" id=108]
+[sub_resource type="TileSet" id=112]
 0/name = "Stairs.png 0"
 0/texture = ExtResource( 6 )
 0/tex_offset = Vector2( 0, 0 )
@@ -812,30 +812,31 @@ points = PoolVector2Array( 0, 32, 16, 48, 4, 44 )
 "autotile_coord": Vector2( 16, 0 ),
 "one_way": true,
 "one_way_margin": 1.0,
-"shape": SubResource( 109 ),
+"shape": SubResource( 108 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 17, 0 ),
 "one_way": true,
 "one_way_margin": 1.0,
-"shape": SubResource( 110 ),
+"shape": SubResource( 109 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 18, 0 ),
 "one_way": true,
 "one_way_margin": 1.0,
-"shape": SubResource( 111 ),
+"shape": SubResource( 110 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 19, 0 ),
 "one_way": true,
 "one_way_margin": 1.0,
-"shape": SubResource( 112 ),
+"shape": SubResource( 111 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 0/z_index = 0
 
 [node name="MainTileMap" type="TileMap"]
+z_index = -1
 tile_set = SubResource( 95 )
 cell_size = Vector2( 16, 16 )
 collision_layer = 2
@@ -857,7 +858,7 @@ format = 1
 
 [node name="Stairs" type="TileMap" parent="."]
 z_index = -1
-tile_set = SubResource( 108 )
+tile_set = SubResource( 112 )
 cell_size = Vector2( 16, 16 )
 collision_layer = 16
 collision_mask = 0
