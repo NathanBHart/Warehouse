@@ -7,6 +7,10 @@ var mouse_detected = false
 var MainInstances = ResourceLoader.MainInstances
 
 func _process(_delta):
+	
+	if 	MainInstances.Player == null:
+		return
+	
 	playerDetector.cast_to = (MainInstances.Player.global_position + Vector2(0, -16)) - global_position
 	
 	if playerDetector.is_colliding(): return
