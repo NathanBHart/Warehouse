@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Rooms/Room.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World/Door.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Enemies/Turret.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Graphics/Enemies/light.png" type="Texture" id=6]
 [ext_resource path="res://World/LightSwitch.tscn" type="PackedScene" id=7]
+[ext_resource path="res://World/ButtonDoor.tscn" type="PackedScene" id=8]
 
 [node name="Room1" instance=ExtResource( 1 )]
 position = Vector2( 0, 0.280609 )
@@ -68,4 +69,14 @@ position = Vector2( -221.15, 85.5702 )
 [node name="LightSwitch" parent="." index="7" instance=ExtResource( 7 )]
 position = Vector2( -8, 79.7194 )
 
+[node name="ButtonDoor" parent="." index="8" instance=ExtResource( 8 )]
+position = Vector2( -240, 143.719 )
+
+[node name="Button" parent="ButtonDoor" index="2"]
+position = Vector2( -40, 0 )
+
+[node name="Button2" parent="ButtonDoor" index="3"]
+position = Vector2( 56, 0 )
+
 [editable path="MainTileMap"]
+[editable path="ButtonDoor"]
