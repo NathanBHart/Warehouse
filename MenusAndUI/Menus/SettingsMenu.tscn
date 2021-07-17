@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://MenusAndUI/MainTheme.tres" type="Theme" id=1]
 [ext_resource path="res://MenusAndUI/Menus/SettingsMenu.gd" type="Script" id=2]
+[ext_resource path="res://MenusAndUI/Fonts/slkscr-7.tres" type="DynamicFont" id=3]
 
 [node name="SettingsMenu" type="Control"]
 pause_mode = 2
@@ -86,14 +87,14 @@ __meta__ = {
 [node name="Label" type="Label" parent="MarginContainer/TabContainer/Video/MarginContainer2/HBoxContainer/VBoxContainer"]
 margin_right = 193.0
 margin_bottom = 23.0
-text = "Brightness"
+text = "Game Brightness: "
 
 [node name="BrightnessSlider" type="HSlider" parent="MarginContainer/TabContainer/Video/MarginContainer2/HBoxContainer/VBoxContainer"]
 margin_top = 27.0
 margin_right = 193.0
 margin_bottom = 43.0
 
-[node name="CheckBox" type="CheckBox" parent="MarginContainer/TabContainer/Video/MarginContainer2/HBoxContainer/VBoxContainer"]
+[node name="FullscreenCheckBox" type="CheckBox" parent="MarginContainer/TabContainer/Video/MarginContainer2/HBoxContainer/VBoxContainer"]
 margin_top = 47.0
 margin_right = 193.0
 margin_bottom = 71.0
@@ -160,7 +161,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="MarginContainer/TabContainer/Audio/MarginContainer/HBoxContainer/VBoxContainer"]
 margin_right = 193.0
 margin_bottom = 23.0
-text = "Sound Effects"
+text = "Sound Effects:"
 
 [node name="SoundEffectsSlider" type="HSlider" parent="MarginContainer/TabContainer/Audio/MarginContainer/HBoxContainer/VBoxContainer"]
 margin_top = 27.0
@@ -171,7 +172,7 @@ margin_bottom = 43.0
 margin_top = 47.0
 margin_right = 193.0
 margin_bottom = 70.0
-text = "Music"
+text = "Music:"
 
 [node name="MusicSlider" type="HSlider" parent="MarginContainer/TabContainer/Audio/MarginContainer/HBoxContainer/VBoxContainer"]
 margin_top = 74.0
@@ -239,12 +240,29 @@ __meta__ = {
 [node name="Label" type="Label" parent="MarginContainer/TabContainer/Gameplay/MarginContainer/HBoxContainer/VBoxContainer"]
 margin_right = 193.0
 margin_bottom = 23.0
-text = "Difficulty"
+text = "Difficulty: "
 
 [node name="DifficultySlider" type="HSlider" parent="MarginContainer/TabContainer/Gameplay/MarginContainer/HBoxContainer/VBoxContainer"]
 margin_top = 27.0
 margin_right = 193.0
 margin_bottom = 43.0
+min_value = 1.0
+max_value = 3.0
+value = 1.0
+
+[node name="AutoLoadCheckBox" type="CheckBox" parent="MarginContainer/TabContainer/Gameplay/MarginContainer/HBoxContainer/VBoxContainer"]
+margin_top = 47.0
+margin_right = 193.0
+margin_bottom = 71.0
+text = "Automatic Loading"
+
+[node name="Label2" type="Label" parent="MarginContainer/TabContainer/Gameplay/MarginContainer/HBoxContainer/VBoxContainer"]
+margin_top = 75.0
+margin_right = 193.0
+margin_bottom = 102.0
+custom_fonts/font = ExtResource( 3 )
+text = "(Automaticly loads game when player dies.)"
+autowrap = true
 
 [node name="Control" type="Control" parent="MarginContainer/TabContainer/Gameplay/MarginContainer/HBoxContainer"]
 margin_left = 197.0

@@ -10,15 +10,15 @@
 [node name="Main" type="Node"]
 script = ExtResource( 4 )
 
-[node name="Camera" parent="." instance=ExtResource( 5 )]
-position = Vector2( 68.6123, 82.097 )
-
 [node name="Room1" parent="." instance=ExtResource( 3 )]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 68.6123, 82.097 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+
+[node name="Camera" parent="." instance=ExtResource( 5 )]
+position = Vector2( 68.6123, 82.097 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
