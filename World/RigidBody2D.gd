@@ -20,12 +20,14 @@ enum {
 var state = DO_NOT_MOVE
 
 func _physics_process(delta):
-	
 	pivot.global_rotation = 0
 	
 	match state:
 		MOVE:
-			
+			if MainInstances.Player.holding != 3:
+				state = DO_NOT_MOVE
+				return
+				
 			set_collision_mask_bit(4, false)
 			
 			if MainInstances.Player == null:
@@ -69,7 +71,5 @@ func _on_MouseDetectorSmall_mouse_entered():
 func _on_MouseDetectorSmall_mouse_exited():
 	mouse_detected = false
 
-
 func on_floor():
 	return floorDetector.get_overlapping_bodies().size() > 0
-		
