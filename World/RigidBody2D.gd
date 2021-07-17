@@ -3,8 +3,12 @@ extends RigidBody2D
 export var MOUSE_DETECTION_RADIUS = 20
 export var SPEED = 500
 
+onready var pivot = $Pivot
+onready var floorDetector = $Pivot/FloorDetector
+
 var mouse_detected_still = false
 var mouse_detected = false
+
 
 var MainInstances = ResourceLoader.MainInstances
 
@@ -16,14 +20,20 @@ enum {
 var state = DO_NOT_MOVE
 
 func _physics_process(delta):
+	
+	pivot.global_rotation = 0
+	
 	match state:
 		MOVE:
+			
+			set_collision_mask_bit(4, false)
+			
 			if MainInstances.Player == null:
 				state = DO_NOT_MOVE
 				return
 				
 			var distance_scale_factor = Vector2.ZERO
-			distance_scale_factor = position.distance_to(MainInstances.Player.position)/500
+			distance_scale_factor = position.distance_to(MainInstances.Player.position)/(SPEED*2)
 			
 			gravity_scale = distance_scale_factor
 			
@@ -36,6 +46,9 @@ func _physics_process(delta):
 			apply_central_impulse(direction * delta * SPEED)
 				
 		DO_NOT_MOVE:
+			
+			if on_floor():
+				set_collision_mask_bit(4, true)
 			
 			gravity_scale = 1
 			
@@ -55,3 +68,8 @@ func _on_MouseDetectorSmall_mouse_entered():
 
 func _on_MouseDetectorSmall_mouse_exited():
 	mouse_detected = false
+
+
+func on_floor():
+	return floorDetector.get_overlapping_bodies().size() > 0
+		

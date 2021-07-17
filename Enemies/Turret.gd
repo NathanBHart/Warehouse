@@ -1,9 +1,17 @@
 extends "res://Enemies/Enemy.gd"
 
+const LIGHT_UP_LERP = 0.1
+
 export (float, 0, 250) var RANGE = 200
 export (float, 0.01, 5) var SPEED = 1
 export (float, 0, 1) var ACCURACY = 0.2
 export (float, 0.01, 10) var WAIT_DELAY = 1
+export (int, "Standard", "Always") var TARGETING_MODE = 0
+
+enum {
+	STANDARD,
+	ALWAYS
+}
 
 onready var shootTimer = $ShootTimer
 onready var windUpTimer = $WindUpTimer
@@ -14,6 +22,8 @@ onready var aim = $Aim
 onready var fire = $Fire
 
 onready var head = $Head
+onready var glow = $Head/Glow
+onready var spotlight = $Head/Glow/Spotlight
 
 const BulletSpray = preload("res://Graphics/Effects/BulletHitSpray.tscn")
 const BulletImpact = preload("res://Graphics/Effects/BulletImpact.tscn")
@@ -35,6 +45,8 @@ func _ready():
 	aim.global_rotation = 0
 	fire.global_rotation = 0
 	randomize()
+	
+	glow.visible = true
 
 func _physics_process(_delta):
 	match state:
@@ -66,11 +78,21 @@ func _physics_process(_delta):
 						shootTimer.wait_time = wait_delay
 						shootTimer.start()
 						fire.cast_to = direction * RANGE
+						
+					if not MainInstances.CurrentRoom.lights_on:
+						spotlight_power_up()
+					else:
+						spotlight_power_down()
 				
 				elif winding_up:
 					if windUpTimer.is_stopped():
 						windUpTimer.start()
 					animationPlayer.play("winding-up")
+					
+					if not MainInstances.CurrentRoom.lights_on:
+						spotlight_power_up()
+					else:
+						spotlight_power_down()
 					
 				else:
 					if aimingTimer.is_stopped():
@@ -87,6 +109,18 @@ func go_idle():
 	winding_up = false
 	
 	rotate_towards_absolute(get_direction_vector(global_rotation), 15, head)
+	
+	spotlight_power_down()
+
+
+func spotlight_power_up():
+	glow.energy = lerp(glow.energy, 3, LIGHT_UP_LERP)
+	spotlight.energy = lerp(spotlight.energy, 2, LIGHT_UP_LERP)
+	
+	
+func spotlight_power_down():
+	glow.energy = lerp(glow.energy, 0, LIGHT_UP_LERP)
+	spotlight.energy = lerp(spotlight.energy, 0, LIGHT_UP_LERP)
 
 func check_for_player():
 	var player_pos = Vector2.ZERO
@@ -104,7 +138,11 @@ func check_for_player():
 		return player_pos
 
 func check_lights():
-	return MainInstances.CurrentRoom.lights_on or MainInstances.Player.flashlight.flashlight_on
+	
+	if TARGETING_MODE == ALWAYS:
+		return true
+	else:
+		return MainInstances.CurrentRoom.lights_on or MainInstances.Player.flashlight.flashlight_on
 
 func shoot_at_player():
 	animationPlayer.stop()

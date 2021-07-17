@@ -86,7 +86,7 @@ walk_right={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"unicode":0,"echo":false,"script":null)
  ]
 }
-slide_faster={
+down={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"unicode":0,"echo":false,"script":null)
  ]
@@ -120,6 +120,7 @@ fullscreen={
 2d_physics/layer_2="Environment"
 2d_physics/layer_3="PlayerHurtbox"
 2d_physics/layer_4="EnemyHitbox"
+2d_physics/layer_5="Stairs"
 
 [physics]
 

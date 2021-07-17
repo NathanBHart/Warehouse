@@ -9,6 +9,9 @@
 script = ExtResource( 2 )
 
 [node name="Lights" type="Node2D" parent="."]
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="MainTileMap" parent="." instance=ExtResource( 3 )]
 
