@@ -62,7 +62,7 @@ position = Vector2( 200, 160 )
 
 [node name="DialogArea" parent="." index="6" instance=ExtResource( 8 )]
 position = Vector2( 424, 168 )
-TEXT = "How are you? This is the Godot icon. "
+TEXT = "How are you? |This is the Godot icon. "
 IMAGE = ExtResource( 7 )
 
 [editable path="MainTileMap"]
