@@ -23,7 +23,8 @@ func _process(_delta):
 
 func set_brightness():
 	var brightness = Settings.brightness/100
-	MainInstances.Player.modulate = Color(1, 1, 1, brightness)
+	if MainInstances.Player != null:
+		MainInstances.Player.modulate = Color(1, 1, 1, brightness)
 	currentRoom.modulate = Color(1, 1, 1, brightness)
 
 func change_rooms(door):
