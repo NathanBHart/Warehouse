@@ -1,12 +1,30 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://World/RigidBody2D.gd" type="Script" id=1]
+[ext_resource path="res://Graphics/Enemies/light.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 112.0
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 24.0
+
+[sub_resource type="Animation" id=3]
+resource_name = "flicker"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Light2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1.0, 0.8, 0.7, 0.7, 0.85 ]
+}
 
 [node name="RigidBody2D" type="RigidBody2D"]
 script = ExtResource( 1 )
@@ -24,6 +42,15 @@ shape = SubResource( 1 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MouseDetectorSmall"]
 visible = false
 shape = SubResource( 2 )
+
+[node name="Light2D" type="Light2D" parent="."]
+scale = Vector2( 0.0579442, 0.0579442 )
+enabled = false
+texture = ExtResource( 2 )
+color = Color( 0, 0.552941, 1, 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/flicker = SubResource( 3 )
 
 [connection signal="mouse_entered" from="MouseDetectorLarge" to="." method="_on_MouseDetectorLarge_mouse_entered"]
 [connection signal="mouse_exited" from="MouseDetectorLarge" to="." method="_on_MouseDetectorLarge_mouse_exited"]

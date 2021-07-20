@@ -5,3 +5,4 @@ var Player = null
 var MainCamera = null
 var Main = null
 var CurrentRoom = null
+var DialoguesRead = []

@@ -28,6 +28,10 @@ _global_script_class_icons={
 
 config/name="Lost Tech Game Demo"
 run/main_scene="res://MenusAndUI/Menus/StartMenu.tscn"
+boot_splash/image="res://godot-wild-splash-pixel-export.png"
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+boot_splash/bg_color=Color( 0.0705882, 0.12549, 0.25098, 1 )
 config/icon="res://icon.png"
 
 [autoload]

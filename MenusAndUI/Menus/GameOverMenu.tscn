@@ -30,37 +30,37 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
-margin_left = 64.0
+margin_left = 69.0
 margin_top = 33.0
-margin_right = 255.0
+margin_right = 250.0
 margin_bottom = 147.0
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
-margin_right = 191.0
+margin_right = 181.0
 margin_bottom = 37.0
 custom_fonts/font = ExtResource( 2 )
-text = "Game over!"
+text = "Game Over"
 align = 1
 
 [node name="Gap" type="Control" parent="CenterContainer/VBoxContainer"]
 margin_top = 41.0
-margin_right = 191.0
+margin_right = 181.0
 margin_bottom = 56.0
 rect_min_size = Vector2( 0, 15 )
 
 [node name="LoadGame" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_left = 35.0
+margin_left = 30.0
 margin_top = 60.0
-margin_right = 156.0
+margin_right = 151.0
 margin_bottom = 85.0
 rect_min_size = Vector2( 121, 0 )
 size_flags_horizontal = 4
 text = "Load Game"
 
 [node name="QuitToStartButton" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_left = 35.0
+margin_left = 30.0
 margin_top = 89.0
-margin_right = 156.0
+margin_right = 151.0
 margin_bottom = 114.0
 rect_min_size = Vector2( 121, 0 )
 size_flags_horizontal = 4

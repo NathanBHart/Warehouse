@@ -50,6 +50,7 @@ __meta__ = {
 }
 
 [node name="Video" type="Tabs" parent="MarginContainer/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 5.0
@@ -123,7 +124,6 @@ margin_bottom = 115.0
 text = "Back"
 
 [node name="Audio" type="Tabs" parent="MarginContainer/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 5.0
@@ -195,9 +195,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/Audio/MarginContainer/HBoxContainer/Control/VBoxContainer"]
+margin_top = 37.0
+margin_right = 101.0
+margin_bottom = 86.0
+custom_fonts/font = ExtResource( 3 )
+text = "Note that audio
+is currently
+unavailable
+for this game"
+
 [node name="BackButton2" type="Button" parent="MarginContainer/TabContainer/Audio/MarginContainer/HBoxContainer/Control/VBoxContainer"]
 margin_top = 90.0
-margin_right = 83.0
+margin_right = 101.0
 margin_bottom = 115.0
 text = "Back"
 

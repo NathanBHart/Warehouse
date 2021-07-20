@@ -5,6 +5,8 @@ export var SPEED = 500
 
 onready var pivot = $Pivot
 onready var floorDetector = $Pivot/FloorDetector
+onready var light = $Light2D
+onready var animationPlayer = $AnimationPlayer
 
 var mouse_detected_still = false
 var mouse_detected = false
@@ -24,6 +26,10 @@ func _physics_process(delta):
 	
 	match state:
 		MOVE:
+			
+			light.enabled = true
+			animationPlayer.play("flicker")
+			
 			if MainInstances.Player.holding != 3:
 				state = DO_NOT_MOVE
 				return
@@ -33,11 +39,8 @@ func _physics_process(delta):
 			if MainInstances.Player == null:
 				state = DO_NOT_MOVE
 				return
-				
-			var distance_scale_factor = Vector2.ZERO
-			distance_scale_factor = position.distance_to(MainInstances.Player.position)/(SPEED*2)
 			
-			gravity_scale = distance_scale_factor
+			gravity_scale = 0
 			
 			if (not Input.is_action_pressed("use") or not MainInstances.Player.idle):
 				state = DO_NOT_MOVE
@@ -49,6 +52,9 @@ func _physics_process(delta):
 				
 		DO_NOT_MOVE:
 			
+			light.enabled = false
+			animationPlayer.stop()
+			
 			if on_floor():
 				set_collision_mask_bit(4, true)
 			
@@ -57,7 +63,8 @@ func _physics_process(delta):
 			if MainInstances.Player == null: return
 			
 			if (mouse_detected and Input.is_action_pressed("use") and MainInstances.Player.idle):
-				state = MOVE
+				if MainInstances.Player.holding == 3:
+					state = MOVE
 
 func _on_MouseDetectorLarge_mouse_entered():
 	mouse_detected_still = true

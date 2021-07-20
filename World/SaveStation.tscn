@@ -4,6 +4,7 @@
 [ext_resource path="res://Graphics/World/First-Aid-Kit.png" type="Texture" id=2]
 [ext_resource path="res://Graphics/Enemies/light.png" type="Texture" id=3]
 
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10.338, 12.0127 )
 
 [node name="SaveStation" type="Area2D"]
@@ -15,6 +16,7 @@ enabled = true
 cast_to = Vector2( 0, 0 )
 collision_mask = 2
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]

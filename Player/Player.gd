@@ -52,6 +52,7 @@ onready var hurtbox = $Hurtbox
 var turning = false
 var turn_to = 1
 var holding = 1
+var unlocked_GFM = false
 
 # Preload Resources
 var MainInstances = ResourceLoader.MainInstances
@@ -86,7 +87,6 @@ func queue_free():
 	.queue_free()
 
 func _physics_process(delta):
-	print(holding)
 	match state:
 		MOVE_STATE:
 			var input_vector = get_input_vector()
@@ -392,13 +392,8 @@ func move():
 		position.x = last_position.x
 
 
-func update_animations(input_vector):
+func update_animations(input_vector):	
 	
-	if holding == 2:
-		flashlight.show()
-	else:
-		flashlight.hide()
-		
 	var current_anim = animationPlayer.current_animation
 	
 	if animationPlayer.is_playing() and (current_anim == "jump" or current_anim == "jump-holding"):
@@ -465,7 +460,7 @@ func update_holding():
 		holding = 1
 	elif Input.is_action_just_pressed("item_2"):
 		holding = 2
-	elif Input.is_action_just_pressed("item_3"):
+	elif Input.is_action_just_pressed("item_3") and unlocked_GFM:
 		holding = 3
 
 func _on_TurnTimer_timeout():
