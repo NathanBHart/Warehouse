@@ -10,7 +10,7 @@ Warehouse is an exploratory platformer of an abandoned laboratory.
 
 This game was made by Brady DeBoer and Nathan Hart for the Godot Wild Game Jame #35. We were unable to complete it, but we have enough for this pre-alpha demo that you can try. It is not a complete experience, is not polished, and is very short, but we hope you enjoy it anyways. 
 
-You can play this game via [this HTML5 export](https://conscience.itch.io/warehouse-pre-alpha) in your web-browser (via [itch.io](https://itch.io/))
+**You can play this game via HTML5 in your web-browser, or access OS exports [via itch.io](https://conscience.itch.io/warehouse-pre-alpha)**
 
 >**Rated top 10 for Graphics** \
 **Rated top 30 Overall**\
